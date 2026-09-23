@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: "Cormorant Garamond", Georgia, serif;
+    --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #180e17;
+    color: #ede4dc;
+    overflow-x: hidden;
+    width: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-serif-title {
+    font-family: var(--font-serif);
+    text-wrap: balance;
+  }
+
+  p, li {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: rgba(217, 158, 65, 0.35);
+    color: #fff9f2;
+  }
+}
+
+.passepartout-shadow {
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(0, 0, 0, 0.15), 0 16px 36px -12px rgba(0, 0, 0, 0.85);
+}
+
+.inner-art-shadow {
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.gold-glow {
+  box-shadow: 0 0 30px rgba(217, 158, 65, 0.25);
+}
+
+.wine-card {
+  background: linear-gradient(180deg, rgba(45, 23, 39, 0.6) 0%, rgba(28, 14, 25, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s ease;
+}
+
+.wine-card:hover {
+  border-color: rgba(217, 158, 65, 0.45);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.9), 0 0 25px rgba(217, 158, 65, 0.12);
+}
+
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.32) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  transition: none;
+}
+
+.shimmer-btn:hover::after {
+  left: 120%;
+  transition: left 0.85s ease-in-out;
+}
+
+.glimmer-social {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glimmer-social:hover {
+  transform: translateY(-2px) scale(1.05);
+  border-color: rgba(217, 158, 65, 0.85);
+  background-color: rgba(217, 158, 65, 0.18);
+  box-shadow: 0 0 22px rgba(217, 158, 65, 0.4), inset 0 0 10px rgba(217, 158, 65, 0.15);
+}
+
+.glimmer-social:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.interactive-action-btn {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.interactive-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px -4px rgba(217, 158, 65, 0.35);
+}
+
+@keyframes microHaptic {
+  0% { transform: scale(0.97) translateY(0); }
+  25% { transform: scale(0.96) translateX(-1.2px); }
+  50% { transform: scale(0.96) translateX(1.2px); }
+  75% { transform: scale(0.96) translateX(-0.6px); }
+  100% { transform: scale(0.97) translateY(1px); }
+}
+
+.interactive-action-btn:active,
+.btn-vibrate:active {
+  animation: microHaptic 0.16s ease-in-out;
+}
+
+.section-title-subtle {
+  transition: text-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease, letter-spacing 0.4s ease;
+  cursor: default;
+}
+
+.section-title-subtle:hover {
+  text-shadow: 0 0 25px rgba(217, 158, 65, 0.4), 0 0 2px rgba(251, 245, 237, 0.9);
+  color: #fffaf4;
+}
+
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float-soft {
+  animation: floatSoft 5s ease-in-out infinite;
+}
+
+@keyframes goldPulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(217, 158, 65, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(217, 158, 65, 0.35);
+  }
+}
+
+.animate-gold-pulse {
+  animation: goldPulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes fadeInSilk {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-silk-in {
+  animation: fadeInSilk 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #150a13;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #391c33;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d99e41;
+}
