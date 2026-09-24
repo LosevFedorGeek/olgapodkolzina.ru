@@ -46,7 +46,7 @@ export const Hero: React.FC<HeroProps> = ({
       id: 'portrait',
       title: 'Ольга Подколзина',
       subtitle: 'Академический художник',
-      technique: 'Член Союза художников, выпускник худграфа ЧГУ',
+      technique: 'Выпускница худграфа ЧГУ, мастер станковой живописи',
       imageSrc: '/assets/olga.jpg',
       badge: 'АВТОР'
     },
