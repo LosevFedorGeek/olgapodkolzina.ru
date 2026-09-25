@@ -3,13 +3,12 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Footer } from './components/Footer';
-import { AdminFloatingBadge } from './components/AdminFloatingBadge';
 import { GeminiArtAdvisor } from './components/GeminiArtAdvisor';
 import { ArtCursor } from './components/ArtCursor';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
 import { Artwork, InquiryData, CartItem, ServiceItem } from './types';
-import { getStoredArtworks, saveStoredArtworks, getStoredServices, saveStoredServices } from './data/artworks';
+import { ARTWORKS, INITIAL_SERVICES } from './data/artworks';
 
 const Gallery = lazy(() => import('./components/Gallery').then((m) => ({ default: m.Gallery })));
 const Education = lazy(() => import('./components/Education').then((m) => ({ default: m.Education })));
@@ -18,11 +17,10 @@ const FAQ = lazy(() => import('./components/FAQ').then((m) => ({ default: m.FAQ 
 const Modal = lazy(() => import('./components/Modal').then((m) => ({ default: m.Modal })));
 const Lightbox = lazy(() => import('./components/Lightbox').then((m) => ({ default: m.Lightbox })));
 const CartModal = lazy(() => import('./components/CartModal').then((m) => ({ default: m.CartModal })));
-const AdminModal = lazy(() => import('./components/AdminModal').then((m) => ({ default: m.AdminModal })));
 
 export function App() {
-  const [artworks, setArtworks] = useState<Artwork[]>(() => getStoredArtworks());
-  const [services, setServices] = useState<ServiceItem[]>(() => getStoredServices());
+  const [artworks] = useState<Artwork[]>(ARTWORKS);
+  const [services] = useState<ServiceItem[]>(INITIAL_SERVICES);
 
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     try {
@@ -36,18 +34,6 @@ export function App() {
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [isAdminAuthorized, setIsAdminAuthorized] = useState<boolean>(() => {
-    try {
-      return (
-        localStorage.getItem('olga_admin_authorized') === 'true' ||
-        sessionStorage.getItem('podkolzina_admin_session') === 'true'
-      );
-    } catch {
-      return false;
-    }
-  });
-
   const [inquiryData, setInquiryData] = useState<InquiryData | null>(null);
 
   useEffect(() => {
@@ -56,47 +42,18 @@ export function App() {
     } catch {}
   }, [cartItems]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        (e.altKey && (e.key === 'a' || e.key === 'A' || e.key === 'ф' || e.key === 'Ф')) ||
-        (e.ctrlKey && e.shiftKey && (e.key === 'a' || e.key === 'A' || e.key === 'ф' || e.key === 'Ф'))
-      ) {
-        e.preventDefault();
-        setIsAdminOpen(true);
-      }
-    };
-
-    const checkUrlTriggers = () => {
-      if (window.location.hash === '#admin' || window.location.search.includes('admin')) {
-        setIsAdminOpen(true);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('hashchange', checkUrlTriggers);
-    checkUrlTriggers();
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('hashchange', checkUrlTriggers);
-    };
-  }, []);
-
-  const handleUpdateArtworks = (newArtworks: Artwork[]) => {
-    setArtworks(newArtworks);
-    saveStoredArtworks(newArtworks);
-  };
-
-  const handleUpdateServices = (newServices: ServiceItem[]) => {
-    setServices(newServices);
-    saveStoredServices(newServices);
-  };
-
   const handleOpenContact = (topic?: string) => {
     setInquiryData({
       type: 'general',
       itemTitle: topic || 'Общий запрос / Консультация'
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleCommissionRequest = () => {
+    setInquiryData({
+      type: 'commission',
+      itemTitle: 'Индивидуальный заказ картины'
     });
     setIsModalOpen(true);
   };
@@ -183,7 +140,6 @@ export function App() {
       <Header
         onOpenContact={handleOpenContact}
         onOpenCart={() => setIsCartOpen(true)}
-        onOpenAdmin={() => setIsAdminOpen(true)}
         cartCount={cartItems.length}
       />
 
@@ -209,6 +165,7 @@ export function App() {
             onSelectArtwork={handleSelectArtwork}
             onPurchaseArtwork={handlePurchaseArtwork}
             onAddToCart={handleAddToCart}
+            onCommissionRequest={handleCommissionRequest}
           />
           <Education
             services={services}
@@ -223,11 +180,6 @@ export function App() {
       <Footer onOpenContact={handleOpenContact} />
 
       <GeminiArtAdvisor />
-
-      <AdminFloatingBadge
-        isAuthorized={isAdminAuthorized}
-        onOpen={() => setIsAdminOpen(true)}
-      />
 
       <Suspense fallback={null}>
         {selectedArtwork && (
@@ -246,18 +198,6 @@ export function App() {
             items={cartItems}
             onRemoveItem={handleRemoveCartItem}
             onClearCart={handleClearCart}
-          />
-        )}
-
-        {isAdminOpen && (
-          <AdminModal
-            isOpen={isAdminOpen}
-            onClose={() => setIsAdminOpen(false)}
-            artworks={artworks}
-            onUpdateArtworks={handleUpdateArtworks}
-            services={services}
-            onUpdateServices={handleUpdateServices}
-            onAuthChange={(isAuth) => setIsAdminAuthorized(isAuth)}
           />
         )}
 

@@ -37,7 +37,7 @@ export interface ServiceItem {
 }
 
 export interface InquiryData {
-  type: 'artwork' | 'masterclass' | 'consultation' | 'general';
+  type: 'artwork' | 'masterclass' | 'consultation' | 'general' | 'commission';
   itemTitle?: string;
   price?: string;
 }

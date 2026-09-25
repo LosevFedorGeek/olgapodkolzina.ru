@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Генератор обложки для Авито 4:3 (1600x1200)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Cabinet+Grotesk:wght@800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0f17;
+      color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+    .controls {
+      margin-bottom: 24px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(37, 99, 235, 0.6);
+    }
+    .canvas-wrapper {
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls">
+    <button class="btn" id="downloadBtn">📥 Скачать готовую обложку в PNG (1600x1200)</button>
+  </div>
+
+  <div class="canvas-wrapper">
+    <canvas id="bannerCanvas" width="1600" height="1200"></canvas>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('bannerCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawBanner() {
+      // 1. Background Gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, 1600, 1200);
+      bgGrad.addColorStop(0, '#090D16');
+      bgGrad.addColorStop(0.5, '#0E1626');
+      bgGrad.addColorStop(1, '#070A10');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 1600, 1200);
+
+      // 2. Subtle Glow Orbs
+      const glow1 = ctx.createRadialGradient(300, 200, 50, 300, 200, 600);
+      glow1.addColorStop(0, 'rgba(37, 99, 235, 0.25)');
+      glow1.addColorStop(1, 'rgba(37, 99, 235, 0)');
+      ctx.fillStyle = glow1;
+      ctx.fillRect(0, 0, 1600, 1200);
+
+      const glow2 = ctx.createRadialGradient(1300, 700, 100, 1300, 700, 700);
+      glow2.addColorStop(0, 'rgba(16, 185, 129, 0.20)');
+      glow2.addColorStop(1, 'rgba(16, 185, 129, 0)');
+      ctx.fillStyle = glow2;
+      ctx.fillRect(0, 0, 1600, 1200);
+
+      const glow3 = ctx.createRadialGradient(800, 1100, 80, 800, 1100, 500);
+      glow3.addColorStop(0, 'rgba(99, 102, 241, 0.20)');
+      glow3.addColorStop(1, 'rgba(99, 102, 241, 0)');
+      ctx.fillStyle = glow3;
+      ctx.fillRect(0, 0, 1600, 1200);
+
+      // Grid Accent Pattern
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < 1600; x += 80) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, 1200);
+        ctx.stroke();
+      }
+      for (let y = 0; y < 1200; y += 80) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(1600, y);
+        ctx.stroke();
+      }
+
+      // 3. Top Quality Badge
+      ctx.fillStyle = 'rgba(37, 99, 235, 0.15)';
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.4)';
+      ctx.lineWidth = 2;
+      roundRect(ctx, 100, 90, 480, 56, 28, true, true);
+
+      // Badge Dot
+      ctx.fillStyle = '#10B981';
+      ctx.beginPath();
+      ctx.arc(130, 118, 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#60A5FA';
+      ctx.font = '700 24px Inter, sans-serif';
+      ctx.fillText('РАЗРАБОТКА САЙТОВ ПОД КЛЮЧ', 152, 126);
+
+      // 4. Main Big Headline
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '900 76px Inter, sans-serif';
+      ctx.fillText('САЙТЫ ДЛЯ БИЗНЕСА', 100, 230);
+
+      const gradText = ctx.createLinearGradient(100, 0, 800, 0);
+      gradText.addColorStop(0, '#38BDF8');
+      gradText.addColorStop(1, '#818CF8');
+      ctx.fillStyle = gradText;
+      ctx.fillText('С ЗАЯВКАМИ В TELEGRAM', 100, 315);
+
+      // 5. Subtitle
+      ctx.fillStyle = '#94A3B8';
+      ctx.font = '600 32px Inter, sans-serif';
+      ctx.fillText('Открытие за 1 секунду • Адаптив под смартфоны • Запуск от 3 дней', 100, 385);
+
+      // 6. Right Side - Floating Device Mockups (Laptop + Smartphone)
+      // Laptop Base
+      const laptopX = 780;
+      const laptopY = 460;
+      const laptopW = 720;
+      const laptopH = 460;
+
+      // Screen Shadow
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+      ctx.shadowBlur = 60;
+      ctx.shadowOffsetY = 30;
+
+      // Laptop Bezel
+      ctx.fillStyle = '#1E293B';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.lineWidth = 3;
+      roundRect(ctx, laptopX, laptopY, laptopW, laptopH, 20, true, true);
+
+      // Screen Interior
+      ctx.shadowColor = 'transparent';
+      const screenGrad = ctx.createLinearGradient(laptopX, laptopY, laptopX + laptopW, laptopY + laptopH);
+      screenGrad.addColorStop(0, '#0F172A');
+      screenGrad.addColorStop(1, '#1E293B');
+      ctx.fillStyle = screenGrad;
+      roundRect(ctx, laptopX + 16, laptopY + 16, laptopW - 32, laptopH - 32, 12, true, false);
+
+      // Inside Screen - UI Mockup
+      // Screen Header
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+      roundRect(ctx, laptopX + 36, laptopY + 36, laptopW - 72, 44, 8, true, false);
+
+      ctx.fillStyle = '#38BDF8';
+      ctx.font = '800 18px Inter, sans-serif';
+      ctx.fillText('KORONA HOTEL & SPA', laptopX + 54, laptopY + 64);
+
+      // Screen Hero Banner
+      const heroGrad = ctx.createLinearGradient(laptopX + 36, laptopY + 100, laptopX + laptopW - 36, laptopY + 280);
+      heroGrad.addColorStop(0, '#1E3A8A');
+      heroGrad.addColorStop(1, '#065F46');
+      ctx.fillStyle = heroGrad;
+      roundRect(ctx, laptopX + 36, laptopY + 100, laptopW - 72, 170, 12, true, false);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '800 24px Inter, sans-serif';
+      ctx.fillText('Премиальный отдых на природе', laptopX + 64, laptopY + 160);
+
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      ctx.font = '500 16px Inter, sans-serif';
+      ctx.fillText('Комфортные номера, спа-комплекс и авторская кухня', laptopX + 64, laptopY + 195);
+
+      // Book button on mock
+      ctx.fillStyle = '#10B981';
+      roundRect(ctx, laptopX + 64, laptopY + 220, 160, 36, 18, true, false);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '700 14px Inter, sans-serif';
+      ctx.fillText('Забронировать', laptopX + 90, laptopY + 244);
+
+      // 3 Cards below hero on mock
+      const cardW = 195;
+      for (let i = 0; i < 3; i++) {
+        const cx = laptopX + 36 + i * (cardW + 18);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+        roundRect(ctx, cx, laptopY + 290, cardW, 110, 8, true, false);
+
+        ctx.fillStyle = '#38BDF8';
+        ctx.font = '700 14px Inter, sans-serif';
+        ctx.fillText(['Номер Люкс', 'Семейный дом', 'Ресторан'][i], cx + 16, laptopY + 320);
+
+        ctx.fillStyle = '#94A3B8';
+        ctx.font = '500 12px Inter, sans-serif';
+        ctx.fillText(['от 4 500 ₽/сутки', 'от 7 000 ₽/сутки', 'Бронь столов'][i], cx + 16, laptopY + 350);
+      }
+
+      // Laptop Keyboard Base
+      ctx.fillStyle = '#334155';
+      ctx.beginPath();
+      ctx.moveTo(laptopX - 40, laptopY + laptopH);
+      ctx.lineTo(laptopX + laptopW + 40, laptopY + laptopH);
+      ctx.lineTo(laptopX + laptopW + 20, laptopY + laptopH + 20);
+      ctx.lineTo(laptopX - 20, laptopY + laptopH + 20);
+      ctx.closePath();
+      ctx.fill();
+
+      // Notch
+      ctx.fillStyle = '#64748B';
+      roundRect(ctx, laptopX + laptopW / 2 - 50, laptopY + laptopH, 100, 8, 4, true, false);
+
+      // 7. Smartphone Mockup (Overlapping in foreground)
+      const phoneX = 640;
+      const phoneY = 480;
+      const phoneW = 270;
+      const phoneH = 540;
+
+      ctx.shadowColor = 'rgba(0, 0, 0, 0.85)';
+      ctx.shadowBlur = 50;
+      ctx.shadowOffsetY = 25;
+
+      // Phone Body
+      ctx.fillStyle = '#0F172A';
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 4;
+      roundRect(ctx, phoneX, phoneY, phoneW, phoneH, 36, true, true);
+
+      // Phone Screen
+      ctx.shadowColor = 'transparent';
+      ctx.fillStyle = '#090D16';
+      roundRect(ctx, phoneX + 10, phoneY + 10, phoneW - 20, phoneH - 20, 28, true, false);
+
+      // Dynamic Island / Speaker
+      ctx.fillStyle = '#1E293B';
+      roundRect(ctx, phoneX + phoneW / 2 - 40, phoneY + 18, 80, 16, 8, true, false);
+
+      // Phone Content
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.15)';
+      roundRect(ctx, phoneX + 24, phoneY + 54, phoneW - 48, 38, 10, true, false);
+      ctx.fillStyle = '#38BDF8';
+      ctx.font = '800 15px Inter, sans-serif';
+      ctx.fillText('⚡ Бронирование онлайн', phoneX + 38, phoneY + 78);
+
+      // Phone Card 1
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      roundRect(ctx, phoneX + 24, phoneY + 106, phoneW - 48, 140, 12, true, false);
+      ctx.fillStyle = '#F8FAFC';
+      ctx.font = '700 16px Inter, sans-serif';
+      ctx.fillText('Коттедж у озера', phoneX + 38, phoneY + 136);
+      ctx.fillStyle = '#10B981';
+      ctx.font = '700 15px Inter, sans-serif';
+      ctx.fillText('5 900 ₽ / сутки', phoneX + 38, phoneY + 165);
+
+      // Select dates in phone
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+      roundRect(ctx, phoneX + 38, phoneY + 185, phoneW - 76, 40, 8, true, false);
+      ctx.fillStyle = '#CBD5E1';
+      ctx.font = '500 13px Inter, sans-serif';
+      ctx.fillText('📅 25 сент - 27 сент (2 ночи)', phoneX + 48, phoneY + 210);
+
+      // Green Booking Button on Phone
+      ctx.fillStyle = '#22C55E';
+      roundRect(ctx, phoneX + 24, phoneY + 260, phoneW - 48, 48, 12, true, false);
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '800 16px Inter, sans-serif';
+      ctx.fillText('Забронировать в 2 клика', phoneX + 36, phoneY + 290);
+
+      // 8. Glowing Telegram Lead Alert Card (High psychological trigger)
+      const leadX = 490;
+      const leadY = 790;
+      const leadW = 480;
+      const leadH = 150;
+
+      ctx.shadowColor = 'rgba(34, 197, 94, 0.4)';
+      ctx.shadowBlur = 40;
+      ctx.shadowOffsetY = 15;
+
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
+      ctx.strokeStyle = '#22C55E';
+      ctx.lineWidth = 2.5;
+      roundRect(ctx, leadX, leadY, leadW, leadH, 18, true, true);
+
+      ctx.shadowColor = 'transparent';
+
+      // Telegram Icon circle
+      ctx.fillStyle = '#0284C7';
+      ctx.beginPath();
+      ctx.arc(leadX + 50, leadY + 50, 26, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Paper plane icon
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '700 24px Inter, sans-serif';
+      ctx.fillText('✈️', leadX + 36, leadY + 58);
+
+      // Alert Title
+      ctx.fillStyle = '#22C55E';
+      ctx.font = '800 18px Inter, sans-serif';
+      ctx.fillText('НОВАЯ БРОНЬ В TELEGRAM', leadX + 92, leadY + 44);
+
+      ctx.fillStyle = '#94A3B8';
+      ctx.font = '500 14px Inter, sans-serif';
+      ctx.fillText('Только что • Без посредников и комиссий', leadX + 92, leadY + 68);
+
+      // Alert Details Line
+      ctx.fillStyle = '#F1F5F9';
+      ctx.font = '600 16px Inter, sans-serif';
+      ctx.fillText('Гость: Екатерина • 2 гостя • 11 800 ₽', leadX + 30, leadY + 110);
+
+      ctx.fillStyle = '#38BDF8';
+      ctx.font = '600 14px Inter, sans-serif';
+      ctx.fillText('Телефон: +7 (911) 441-••-•• (передано в CRM)', leadX + 30, leadY + 132);
+
+      // 9. Left Side 4 Value Pillar Cards
+      const pillars = [
+        { icon: '🚀', title: 'Скорость 100/100', desc: 'Мгновенная загрузка на смартфонах' },
+        { icon: '📱', title: 'Удобство гостя', desc: 'Бронь и каталог без скачивания PDF' },
+        { icon: '💬', title: 'Заявки в Telegram / WA', desc: 'Уведомления падают сразу вам на телефон' },
+        { icon: '🤝', title: 'Официальный договор', desc: 'Фиксированная цена и сдача в срок' }
+      ];
+
+      const startY = 470;
+      pillars.forEach((p, idx) => {
+        const py = startY + idx * 135;
+        const pw = 480;
+        const ph = 115;
+
+        // Card bg
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+        ctx.lineWidth = 1.5;
+        roundRect(ctx, 100, py, pw, ph, 16, true, true);
+
+        // Icon bg
+        ctx.fillStyle = 'rgba(37, 99, 235, 0.15)';
+        roundRect(ctx, 120, py + 22, 70, 70, 14, true, false);
+
+        ctx.font = '36px Inter, sans-serif';
+        ctx.fillText(p.icon, 137, py + 68);
+
+        // Title
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '800 22px Inter, sans-serif';
+        ctx.fillText(p.title, 210, py + 52);
+
+        // Desc
+        ctx.fillStyle = '#94A3B8';
+        ctx.font = '500 16px Inter, sans-serif';
+        ctx.fillText(p.desc, 210, py + 82);
+      });
+
+      // 10. Bottom Footer Trust Bar
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.lineWidth = 1;
+      roundRect(ctx, 100, 1050, 1400, 90, 20, true, true);
+
+      // Trust badges inside footer
+      const badges = [
+        '⭐️ Профильное образование',
+        '🔒 Безопасная сделка на Авито',
+        '💼 Работа с физлицами, ИП и ООО',
+        '🎁 Бесплатный аудит конкурентов'
+      ];
+
+      badges.forEach((b, i) => {
+        const bx = 140 + i * 340;
+        ctx.fillStyle = '#E2E8F0';
+        ctx.font = '700 19px Inter, sans-serif';
+        ctx.fillText(b, bx, 1104);
+      });
+    }
+
+    function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+      if (fill) ctx.fill();
+      if (stroke) ctx.stroke();
+    }
+
+    // Trigger render after font loads
+    document.fonts.ready.then(() => {
+      drawBanner();
+    });
+
+    // Download handler
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'avito_cover_losev_1600x1200.png';
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+    });
+  </script>
+</body>
+</html>

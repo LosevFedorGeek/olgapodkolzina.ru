@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, Phone, ShoppingBag } from 'lucide-react';
 import { ARTIST_CONTACTS } from '../data/artworks';
 import { SocialIconGroup } from './SocialIconGroup';
@@ -6,15 +6,12 @@ import { SocialIconGroup } from './SocialIconGroup';
 interface HeaderProps {
   onOpenContact: (topic?: string) => void;
   onOpenCart: () => void;
-  onOpenAdmin: () => void;
   cartCount: number;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenCart, onOpenAdmin, cartCount }) => {
+export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenCart, cartCount }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const clickCountRef = useRef(0);
-  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,19 +43,8 @@ export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenCart, onOpe
   }, [isMobileMenuOpen]);
 
   const handleLogoClick = (e: React.MouseEvent) => {
-    clickCountRef.current += 1;
-    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
-
-    if (clickCountRef.current >= 3) {
-      clickCountRef.current = 0;
-      e.preventDefault();
-      onOpenAdmin();
-      return;
-    }
-
-    clickTimerRef.current = setTimeout(() => {
-      clickCountRef.current = 0;
-    }, 900);
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navLinks = [

@@ -20,7 +20,7 @@ export const CartModal: React.FC<CartModalProps> = ({
   onRemoveItem,
   onClearCart,
 }) => {
-  const [deliveryMethod, setDeliveryMethod] = useState<'delivery_spb' | 'delivery_rf' | 'pickup'>('delivery_spb');
+  const [deliveryMethod, setDeliveryMethod] = useState<'delivery_cdek' | 'delivery_post' | 'pickup'>('delivery_cdek');
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -76,9 +76,9 @@ export const CartModal: React.FC<CartModalProps> = ({
     try {
       const itemsList = items.map((i) => `• ${i.title} (${i.priceFormatted})`).join('\n');
       const deliveryLabels = {
-        delivery_spb: 'Курьер с примеркой по СПб/ЛО',
-        delivery_rf: 'Доставка по РФ и миру (СДЭК/EMS)',
-        pickup: 'Самовывоз из мастерской в СПб'
+        delivery_cdek: 'СДЭК по всей России (ПВЗ или курьер)',
+        delivery_post: 'Почта России с трек-номером',
+        pickup: 'Самовывоз из мастерской автора (г. Бабаево)'
       };
 
       const accessKey =
@@ -163,8 +163,14 @@ export const CartModal: React.FC<CartModalProps> = ({
                     Выберите понравившуюся картину в галерее или мастер-класс и нажмите «В корзину».
                   </p>
                   <button
-                    onClick={onClose}
-                    className="mt-2 px-6 py-2.5 bg-[#D99E41] text-[#160B14] font-semibold text-xs uppercase tracking-wider rounded-sm hover:bg-[#E8BD6F] transition-colors"
+                    onClick={() => {
+                      onClose();
+                      const galleryEl = document.getElementById('gallery');
+                      if (galleryEl) {
+                        galleryEl.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    className="mt-2 px-6 py-2.5 bg-[#D99E41] text-[#160B14] font-semibold text-xs uppercase tracking-wider rounded-sm hover:bg-[#E8BD6F] transition-colors cursor-pointer"
                   >
                     ПЕРЕЙТИ В ГАЛЕРЕЮ
                   </button>
@@ -240,28 +246,28 @@ export const CartModal: React.FC<CartModalProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                   <button
                     type="button"
-                    onClick={() => setDeliveryMethod('delivery_spb')}
+                    onClick={() => setDeliveryMethod('delivery_cdek')}
                     className={`p-3 rounded-xs border text-left transition-colors ${
-                      deliveryMethod === 'delivery_spb'
+                      deliveryMethod === 'delivery_cdek'
                         ? 'bg-[#2E162A] border-[#D99E41] text-[#F7EFE6]'
                         : 'bg-[#180A16] border-white/10 text-[#A89686] hover:border-white/20'
                     }`}
                   >
-                    <div className="font-semibold text-[#EDE4DC]">СПб и ЛО</div>
-                    <div className="text-[11px] text-[#A89686] mt-0.5">Курьер с примеркой</div>
+                    <div className="font-semibold text-[#EDE4DC]">СДЭК по РФ</div>
+                    <div className="text-[11px] text-[#A89686] mt-0.5">ПВЗ или курьер</div>
                   </button>
 
                   <button
                     type="button"
-                    onClick={() => setDeliveryMethod('delivery_rf')}
+                    onClick={() => setDeliveryMethod('delivery_post')}
                     className={`p-3 rounded-xs border text-left transition-colors ${
-                      deliveryMethod === 'delivery_rf'
+                      deliveryMethod === 'delivery_post'
                         ? 'bg-[#2E162A] border-[#D99E41] text-[#F7EFE6]'
                         : 'bg-[#180A16] border-white/10 text-[#A89686] hover:border-white/20'
                     }`}
                   >
-                    <div className="font-semibold text-[#EDE4DC]">Доставка по РФ</div>
-                    <div className="text-[11px] text-[#A89686] mt-0.5">Арт-упаковка СДЭК</div>
+                    <div className="font-semibold text-[#EDE4DC]">Почта России</div>
+                    <div className="text-[11px] text-[#A89686] mt-0.5">Трек-номер и страховка</div>
                   </button>
 
                   <button
@@ -274,7 +280,7 @@ export const CartModal: React.FC<CartModalProps> = ({
                     }`}
                   >
                     <div className="font-semibold text-[#EDE4DC]">Самовывоз</div>
-                    <div className="text-[11px] text-[#A89686] mt-0.5">Мастерская в СПб</div>
+                    <div className="text-[11px] text-[#A89686] mt-0.5">г. Бабаево</div>
                   </button>
                 </div>
               </div>

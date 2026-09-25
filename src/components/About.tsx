@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { SectionHeader } from './SectionHeader';
 
 export const About: React.FC = () => {
   const [imgError, setImgError] = useState(false);
@@ -51,31 +52,25 @@ export const About: React.FC = () => {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-4 flex items-center gap-3">
-          <span className="w-6 h-[1.5px] bg-[#D99E41]" />
-          <span className="text-xs uppercase tracking-[0.2em] text-[#D99E41] font-semibold">
-            ОБ АВТОРЕ
-          </span>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-16 sm:mb-20">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-7 space-y-6"
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#FBF5ED] leading-tight section-title-subtle">
-              «Я пишу счастье&nbsp;— чтобы оно стало вашим»
-            </h2>
+            <SectionHeader
+              badge="ОБ АВТОРЕ"
+              title="«Я пишу счастье – чтобы оно стало вашим»"
+            />
 
             <p className="text-base sm:text-lg text-[#C9B9AA] font-light leading-relaxed">
-              Творческий путь Ольги Подколзиной&nbsp;— это органичный синтез строгой академической школы и&nbsp;тонкого эмоционального восприятия мира. Поступив в&nbsp;1995 году на&nbsp;художественно-графический факультет ЧГУ и&nbsp;успешно окончив его в&nbsp;2000-м, она заложила прочный фундамент своего мастерства, который с&nbsp;тех пор непрерывно воплощает в&nbsp;активной выставочной деятельности.
+              Творческий путь Ольги Подколзиной – это органичный синтез строгой академической школы и тонкого эмоционального восприятия мира. Поступив в 1995 году на художественно-графический факультет ЧГУ и успешно окончив его в 2000-м, она заложила прочный фундамент своего мастерства, который непрерывно воплощает в активной выставочной деятельности.
             </p>
 
             <p className="text-base sm:text-lg text-[#C9B9AA] font-light leading-relaxed">
-              Более 25&nbsp;лет Ольга посвятила преподаванию живописи, передавая секреты классической акварели и&nbsp;графики новому поколению художников. Каждая ее&nbsp;работа&nbsp;— это попытка уловить мимолетное мгновение счастья, наполнить интерьер светом и&nbsp;покоем.
+              Более 25 лет Ольга посвятила преподаванию живописи, передавая секреты классической акварели и графики новому поколению художников. Каждая ее работа – это попытка уловить мимолетное мгновение счастья, наполнить интерьер светом и покоем.
             </p>
           </motion.div>
 

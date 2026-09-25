@@ -2,6 +2,7 @@ import React from 'react';
 import { Palette, GraduationCap, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { ServiceItem } from '../types';
+import { SectionHeader } from './SectionHeader';
 import { formatTypo } from '../utils/typography';
 import { triggerHaptic } from '../utils/haptics';
 
@@ -26,19 +27,12 @@ export const Education: React.FC<EducationProps> = ({ services, onRegister }) =>
   return (
     <section id="education" className="py-20 lg:py-28 relative bg-[#180E17] border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-4 flex items-center gap-3">
-          <span className="w-6 h-[1.5px] bg-[#D99E41]" />
-          <span className="text-xs uppercase tracking-[0.2em] text-[#D99E41] font-semibold">
-            {formatTypo('ОБУЧЕНИЕ И МАСТЕР-КЛАССЫ')}
-          </span>
-        </div>
-
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#FBF5ED] mb-3 text-balance section-title-subtle">
-          {formatTypo('Развивайте художественное видение')}
-        </h2>
-        <p className="text-sm sm:text-base text-[#BAA99A] font-light max-w-2xl mb-12 leading-relaxed text-pretty">
-          {formatTypo('Индивидуальные занятия и авторские курсы академической живописи. Обучение проводится очно и в интерактивном онлайн-формате с подробным разбором ваших работ.')}
-        </p>
+        <SectionHeader
+          badge={formatTypo('ОБУЧЕНИЕ И МАСТЕР-КЛАССЫ')}
+          title={formatTypo('Развивайте художественное видение')}
+          subtitle={formatTypo('Индивидуальные занятия и авторские курсы академической живописи. Обучение проводится очно и в интерактивном онлайн-формате с подробным разбором ваших работ.')}
+          className="mb-12"
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-3.5 lg:gap-6 xl:gap-8 items-stretch">
           {services.map((item, idx) => {

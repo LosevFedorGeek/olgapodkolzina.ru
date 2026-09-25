@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "sync-assets": "node -e \"const fs=require('fs'),path=require('path'); if(fs.existsSync('assets')){fs.mkdirSync('public/assets',{recursive:true}); for(const f of fs.readdirSync('assets')){const s=path.join('assets',f),d=path.join('public/assets',f); if(fs.statSync(s).isFile()){fs.copyFileSync(s,d);}}}\"",
+    "predev": "npm run sync-assets",
     "dev": "tsx server.ts",
+    "prebuild": "npm run sync-assets",
     "build": "vite build",
     "start": "tsx server.ts",
     "preview": "vite preview",

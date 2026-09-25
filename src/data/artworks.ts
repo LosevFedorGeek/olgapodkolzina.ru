@@ -15,152 +15,156 @@ export const ARTIST_CONTACTS = {
 
 export const ARTWORKS: Artwork[] = [
   {
-    id: 'still-life-grapes',
-    title: 'Осенний натюрморт с виноградом',
-    technique: 'Бумага, акварель',
-    size: '40х50 см',
-    price: 45000,
-    priceFormatted: '45\u00A0000\u00A0₽',
-    inStock: true,
-    category: 'watercolor',
-    year: '2024',
-    description: 'Многослойная лессировочная акварель. Изысканная игра света на\u00A0гранях античного серебряного кувшина и\u00A0спелых гроздьях винограда, покоящихся на\u00A0льняной скатерти.',
-    imagePlaceholder: 'svg-grapes',
-    imageSrc: '/assets/inner-bevel.jpg'
-  },
-  {
-    id: 'workshop-light',
-    title: 'Весенний свет в\u00A0мастерской',
-    technique: 'Холст, масло',
-    size: '50х60 см',
-    price: null,
-    priceFormatted: 'В\u00A0частной коллекции',
-    inStock: false,
-    category: 'watercolor',
-    year: '2023',
-    description: 'Импрессионистический этюд мастерской в\u00A0лучах утреннего солнца. Пышный букет белой сирени, мольберт с\u00A0чистым холстом и\u00A0теплая атмосфера творческого уединения.',
-    imagePlaceholder: 'svg-workshop',
-    imageSrc: '/assets/inner-bevel-1.jpg'
-  },
-  {
-    id: 'neva-morning',
-    title: 'Утро на\u00A0набережной Невы',
-    technique: 'Бумага, пастель',
-    size: '35х45 см',
-    price: 38000,
-    priceFormatted: '38\u00A0000\u00A0₽',
+    id: 'spring-breath',
+    title: 'Дыхание весны',
+    technique: 'Тонированная бумага, сухая пастель',
+    size: '30х40 см',
+    price: 17000,
+    priceFormatted: '17 000 ₽',
     inStock: true,
     category: 'graphics',
     year: '2024',
-    description: 'Нежные рассветные тона Петербурга. Зимний дворец в\u00A0предрассветной дымке, зеркальная гладь Невы и\u00A0силуэт прогулочной лодки в\u00A0золотисто-розовом тумане.',
-    imagePlaceholder: 'svg-neva',
-    imageSrc: '/assets/inner-bevel-2.jpg'
+    description: 'Весеннее пробуждение северного леса. Тающий мартовский снег, первые проталины, тонкие стволы берез и птицы, возвращающиеся в родные края.',
+    imagePlaceholder: 'svg-birch',
+    imageSrc: '/assets/dyhanie-vesny.jpg'
   },
   {
-    id: 'old-estate-noon',
-    title: 'Старая усадьба. Полдень',
-    technique: 'Холст, масло',
-    size: '40х60 см',
-    price: 52000,
-    priceFormatted: '52\u00A0000\u00A0₽',
+    id: 'autumn-warmth',
+    title: 'Осеннее тепло',
+    technique: 'Бумага, акварель',
+    size: '40х30 см',
+    price: 18000,
+    priceFormatted: '18 000 ₽',
     inStock: true,
     category: 'watercolor',
-    year: '2023',
-    description: 'Русский классицизм и\u00A0величие природы. Старинный дворянский особняк с\u00A0колоннами, залитый полуденным солнцем сквозь листву вековых берез.',
-    imagePlaceholder: 'svg-estate',
-    imageSrc: '/assets/inner-bevel-3.jpg'
-  },
-  {
-    id: 'peonies-terrace',
-    title: 'Букет пионов на\u00A0террасе',
-    technique: 'Бумага, акварель',
-    size: '50х50 см',
-    price: null,
-    priceFormatted: 'В\u00A0частной коллекции',
-    inStock: false,
-    category: 'watercolor',
     year: '2024',
-    description: 'Виртуозная ботаническая акварель. Нежные лепестки розовых пионов в\u00A0прозрачной стеклянной вазе с\u00A0каплями росы на\u00A0залитой светом дощатой террасе.',
-    imagePlaceholder: 'svg-peonies',
-    imageSrc: '/assets/d89124556d17bbd137ab1c395aa790068db03cc1.jpg'
+    description: 'Богатый и душевный осенний натюрморт. Спелая медовая долька тыквы, глиняный кувшин с пышным букетом луговых трав и пламенеющие гроздья рябины на ткани с традиционным орнаментом.',
+    imagePlaceholder: 'svg-pumpkin',
+    imageSrc: '/assets/osennee-teplo.jpg'
   },
   {
-    id: 'winter-temple',
-    title: 'Зимний силуэт храма',
-    technique: 'Бумага, соус, уголь',
-    size: '40х50 см',
-    price: 42000,
-    priceFormatted: '42\u00A0000\u00A0₽',
+    id: 'garden-velvet',
+    title: 'Бархат сада',
+    technique: 'Тонированная бумага, соус (Графика)',
+    size: '40х30 см',
+    price: 18000,
+    priceFormatted: '18 000 ₽',
     inStock: true,
     category: 'graphics',
     year: '2024',
-    description: 'Академическая тональная графика. Древний пятиглавый собор сквозь кружево заснеженных ветвей деревьев. Глубокая тишина и\u00A0покой русской зимы.',
-    imagePlaceholder: 'svg-temple',
-    imageSrc: '/assets/inner-bevel-5.jpg'
+    description: 'Виртуозная академическая станковая графика в редкой технике соуса. Бархатистые соцветия белых садовых цветов, контрастные гроздья черноплодной рябины и выразительная фактура тонированного листа.',
+    imagePlaceholder: 'svg-garden',
+    imageSrc: '/assets/barhat-sada.jpg'
+  },
+  {
+    id: 'august-tray',
+    title: 'Август на подносе',
+    technique: 'Холст, масло',
+    size: '45х35 см',
+    price: 23000,
+    priceFormatted: '23 000 ₽',
+    inStock: true,
+    category: 'watercolor',
+    year: '2024',
+    description: 'Солнечный натюрморт, наполненный ароматом уходящего лета. Пышный букет золотистых ромашек и полевых хризантем в стеклянной вазе на винтажном подносе со спелыми садовыми яблоками.',
+    imagePlaceholder: 'svg-august',
+    imageSrc: '/assets/avgust-na-podnose.jpg'
+  },
+  {
+    id: 'september-morning',
+    title: 'Сентябрьское утро',
+    technique: 'Холст, масло',
+    size: '40х40 см',
+    price: 22000,
+    priceFormatted: '22 000 ₽',
+    inStock: true,
+    category: 'watercolor',
+    year: '2024',
+    description: 'Уютный натюрморт в мягком утреннем свете. Медный кувшин-чайник с пышным букетом садовых астр, ажурная кружевная салфетка, спелые яблоки и россыпь алых ягод на серебристом блюдце.',
+    imagePlaceholder: 'svg-morning',
+    imageSrc: '/assets/sentyabrskoe-utro.jpg'
+  },
+  {
+    id: 'lilac-etude',
+    title: 'Сиреневый этюд',
+    technique: 'Многослойная авторская акварель. Бумага, акварель',
+    size: '40х30 см',
+    price: 16000,
+    priceFormatted: '16 000 ₽',
+    inStock: true,
+    category: 'watercolor',
+    year: '2024',
+    description: 'Многослойная авторская акварель высокой сложности. Тончайшие прозрачные лессировки передают воздушность сиреневых флоксов и астр, создавая неповторимый эффект внутреннего свечения.',
+    imagePlaceholder: 'svg-lilac',
+    imageSrc: '/assets/sirenevy-etud.jpg'
+  },
+  {
+    id: 'krasny-lane',
+    title: 'Переулок Красный. Этюд',
+    technique: 'Холст, масло',
+    size: '35х25 см',
+    price: 14000,
+    priceFormatted: '14 000 ₽',
+    inStock: true,
+    category: 'watercolor',
+    year: '2024',
+    description: 'Живописный пленэрный этюд русского провинциального городка. Старинный деревянный дом с резным крыльцом в кружевной тени весенних ветвей под ясным северным небом.',
+    imagePlaceholder: 'svg-lane',
+    imageSrc: '/assets/pereulok-krasny.jpg'
+  },
+  {
+    id: 'winter-window',
+    title: 'Окно в зиму',
+    technique: 'Тонированная бумага, темпера',
+    size: '40х30 см',
+    price: 15000,
+    priceFormatted: '15 000 ₽',
+    inStock: true,
+    category: 'graphics',
+    year: '2024',
+    description: 'Теплый образ домашнего уюта на фоне морозного дня. Стеклянный кувшин с золотистыми сухими цветами на подоконнике бревенчатого дома и тихий зимний снегопад за рамой.',
+    imagePlaceholder: 'svg-winter',
+    imageSrc: '/assets/okno-v-zimu.jpg'
+  },
+  {
+    id: 'orange-accord',
+    title: 'Оранжевый аккорд',
+    technique: 'Бумага, акварель',
+    size: '40х30 см',
+    price: 16000,
+    priceFormatted: '16 000 ₽',
+    inStock: true,
+    category: 'watercolor',
+    year: '2024',
+    description: 'Яркий, экспрессивный акварельный натюрморт. Пылающий букет цветов в терракотово-солнечных тонах, старинный расписной фарфоровый заварник и спелые садовые яблоки, наполняющие дом теплом и энергией.',
+    imagePlaceholder: 'svg-orange',
+    imageSrc: '/assets/oranzhevy-akkord.jpg'
   }
 ];
 
 export const INITIAL_SERVICES: ServiceItem[] = [
   {
     id: 'private-lessons',
-    title: 'Частные уроки и\u00A0подготовка',
-    desc: 'Индивидуальный академический курс для\u00A0поступающих в\u00A0художественные вузы и\u00A0желающих освоить рисунок с\u00A0нуля. Постановка руки, штрих, законы перспективы и\u00A0светотени.',
-    price: '3\u00A0500\u00A0₽',
-    period: '/ занятие (2\u00A0часа)',
+    title: 'Частные уроки и подготовка',
+    desc: 'Индивидуальный академический курс для поступающих в художественные вузы и желающих освоить рисунок с нуля. Постановка руки, штрих, законы перспективы и светотени.',
+    price: '3 500 ₽',
+    period: '/ занятие (2 часа)',
     badge: 'Академический базис'
   },
   {
     id: 'masterclasses',
     title: 'Авторские мастер-классы',
-    desc: 'Камерные групповые встречи в\u00A0мастерской художника (до\u00A05 человек). Тонкости лессировочной акварели и\u00A0смешанных графических техник. Профессиональные материалы включены.',
-    price: '5\u00A0000\u00A0₽',
-    period: '/ сессия (3\u00A0часа)',
+    desc: 'Камерные групповые встречи в мастерской художника (до 5 человек). Тонкости лессировочной акварели и смешанных графических техник. Профессиональные материалы включены.',
+    price: '5 000 ₽',
+    period: '/ сессия (3 часа)',
     badge: 'Камерные группы'
   },
   {
     id: 'art-consultation',
     title: 'Арт-консультации',
-    desc: 'Профессиональный подбор картин под\u00A0колористику и\u00A0освещение вашего интерьера. Примерка в\u00A0цифровом формате и\u00A0написание индивидуальных полотен по\u00A0брифу.',
+    desc: 'Профессиональный подбор картин под колористику и освещение вашего интерьера. Примерка в цифровом формате и написание индивидуальных полотен по брифу.',
     price: 'Бесплатно',
     period: 'при заказе полотна',
     badge: 'Для вашего дома'
   }
 ];
-
-export const getStoredArtworks = (): Artwork[] => {
-  try {
-    const raw = localStorage.getItem('podkolzina_artworks');
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
-      }
-    }
-  } catch {}
-  return ARTWORKS;
-};
-
-export const saveStoredArtworks = (artworks: Artwork[]): void => {
-  try {
-    localStorage.setItem('podkolzina_artworks', JSON.stringify(artworks));
-  } catch {}
-};
-
-export const getStoredServices = (): ServiceItem[] => {
-  try {
-    const raw = localStorage.getItem('podkolzina_services');
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
-      }
-    }
-  } catch {}
-  return INITIAL_SERVICES;
-};
-
-export const saveStoredServices = (services: ServiceItem[]): void => {
-  try {
-    localStorage.setItem('podkolzina_services', JSON.stringify(services));
-  } catch {}
-};

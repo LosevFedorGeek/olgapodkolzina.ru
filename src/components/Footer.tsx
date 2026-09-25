@@ -9,37 +9,37 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
   return (
-    <footer id="contacts" className="relative bg-[#0C050B] text-[#DDD0C4] border-t border-white/10 pt-12 sm:pt-14 pb-10 overflow-hidden">
+    <footer id="contacts" className="relative bg-[#0C050B] text-[#DDD0C4] border-t border-white/10 pt-8 sm:pt-10 pb-6 sm:pb-8 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-10 border-b border-white/10 gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-5 border-b border-white/10 gap-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-serif text-[#F8F1E9] tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-serif text-[#F8F1E9] tracking-tight">
               {ARTIST_CONTACTS.name}
             </h2>
-            <p className="text-xs uppercase tracking-widest text-[#D99E41] mt-1 font-medium">
+            <p className="text-[11px] uppercase tracking-widest text-[#D99E41] mt-0.5 font-medium">
               Авторская живопись и графика
             </p>
           </div>
 
           <button
             onClick={() => onOpenContact('Оставить заявку')}
-            className="h-11 px-6 inline-flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#160B14] bg-[#D99E41] hover:bg-[#E8BD6F] active:scale-[0.98] transition-all rounded-sm cursor-pointer shadow-md hover:shadow-lg hover:shadow-[#D99E41]/25 shimmer-btn interactive-action-btn whitespace-nowrap w-full sm:w-auto"
+            className="h-10 px-5 inline-flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#160B14] bg-[#D99E41] hover:bg-[#E8BD6F] active:scale-[0.98] transition-all rounded-sm cursor-pointer shadow-md hover:shadow-lg hover:shadow-[#D99E41]/25 shimmer-btn interactive-action-btn whitespace-nowrap w-full sm:w-auto"
           >
             <span>ОСТАВИТЬ ЗАЯВКУ</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-10 border-b border-white/10">
-          <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-b border-white/10">
+          <div className="space-y-3">
             <h3 className="text-xs uppercase tracking-[0.2em] text-[#D99E41] font-semibold">
               СВЯЗЬ С ХУДОЖНИКОМ
             </h3>
-            <div className="space-y-3 text-xs text-[#BAA99A]">
+            <div className="space-y-2.5 text-xs text-[#BAA99A]">
               <div>
                 <a
                   href={`tel:${ARTIST_CONTACTS.phoneRaw}`}
-                  className="text-base sm:text-lg font-sans font-bold text-[#F8F1E9] hover:text-[#D99E41] transition-colors inline-flex items-center gap-2"
+                  className="text-sm sm:text-base font-sans font-bold text-[#F8F1E9] hover:text-[#D99E41] transition-colors inline-flex items-center gap-2"
                 >
                   <Phone className="w-4 h-4 text-[#D99E41] shrink-0" />
                   <span>{ARTIST_CONTACTS.phone}</span>
@@ -59,17 +59,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
                 </a>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-1">
                 <SocialIconGroup size="sm" />
               </div>
             </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="text-xs uppercase tracking-[0.2em] text-[#D99E41] font-semibold">
               МАСТЕРСКАЯ
             </h3>
-            <div className="space-y-3 text-xs text-[#BAA99A]">
+            <div className="space-y-2.5 text-xs text-[#BAA99A]">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#D99E41] shrink-0 mt-0.5" />
                 <div>
@@ -89,8 +89,29 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
           </div>
         </div>
 
-        <div className="pt-6 text-center sm:text-left text-xs text-[#7A6B5F]">
-          <span>© 2026 Ольга Подколзина. Все права защищены.</span>
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8E7E72] pb-6 sm:pb-4">
+          <div className="text-center sm:text-left">
+            <span>© 2026 Ольга Подколзина. Все права защищены.</span>
+          </div>
+
+          <a
+            href="https://theodorelosev.ru"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Сайт разработчика Theodore Losev"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-[#D99E41]/35 hover:border-[#D99E41] hover:bg-white/10 text-[#EDE4DC] shadow-sm transition-all group cursor-pointer"
+          >
+            <span className="text-[#A8988B] group-hover:text-[#EDE4DC] transition-colors">
+              Дизайн и разработка сайта:
+            </span>
+            <span className="text-[#E8BD6F] group-hover:text-[#FFD88D] font-medium tracking-wide underline sm:no-underline sm:group-hover:underline transition-colors">
+              Theodore Losev
+            </span>
+          </a>
+
+          <div className="text-center sm:text-right text-[#9B8C80] text-[11px] sm:pr-24">
+            <span>Бабаево · Вологодская область</span>
+          </div>
         </div>
       </div>
     </footer>
