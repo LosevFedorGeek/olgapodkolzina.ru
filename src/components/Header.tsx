@@ -7,6 +7,7 @@ interface HeaderProps {
   onOpenContact: (topic?: string) => void;
   onOpenCart: () => void;
   cartCount: number;
+  onOpenFitting?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onOpenContact, onOpenCart, cartCount }) => {

@@ -52,7 +52,7 @@ const QUESTION_SETS: QuestionSet[] = [
     questions: [
       'Как устроена бережная арт-упаковка для пересылки?',
       'Как оформляется доставка по России через СДЭК?',
-      'Прилагается ли авторский сертификат подлинности?',
+      'Гарантируется ли подлинность и авторство оригинала?',
       'Как проходят частные уроки и мастер-классы?'
     ]
   }
@@ -82,8 +82,24 @@ export const GeminiArtAdvisor: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isNearBottom, setIsNearBottom] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.documentElement.scrollHeight;
+      setIsNearBottom(scrollPosition >= documentHeight - 140);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -154,13 +170,18 @@ export const GeminiArtAdvisor: React.FC = () => {
         {!isOpen && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            animate={{ opacity: 1, scale: 1, y: isNearBottom ? -65 : 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{
+              type: 'spring',
+              stiffness: 280,
+              damping: 24
+            }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsOpen(true)}
             aria-label="Открыть арт-консультанта"
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 px-3 sm:px-4 py-2 sm:py-3 rounded-full bg-[#120711]/40 hover:bg-[#200e1e]/75 text-[#E8BD6F] border border-[#D99E41]/35 hover:border-[#D99E41]/70 shadow-lg backdrop-blur-md flex items-center gap-2 transition-all duration-300 cursor-pointer font-sans text-xs sm:text-sm font-semibold tracking-wider uppercase group"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-full bg-[#220F1F] text-[#E8BD6F] hover:text-[#FFF5EA] border border-[#D99E41]/50 hover:border-[#D99E41] shadow-xl hover:shadow-[0_0_22px_rgba(217,158,65,0.4)] hover:bg-[#220F1F]/55 hover:backdrop-blur-md flex items-center gap-2 cursor-pointer font-sans text-xs sm:text-sm font-semibold tracking-wider uppercase group"
           >
             <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D99E41] opacity-75" />

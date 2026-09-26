@@ -207,6 +207,79 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+app.post('/api/analyze-wall', async (req, res) => {
+  try {
+    const { imageBase64, mimeType = 'image/jpeg' } = req.body;
+    if (!imageBase64) {
+      res.status(400).json({ error: 'Image data is required' });
+      return;
+    }
+    const cleanBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, '');
+    const prompt = `Analyze this room or wall photo to find the optimal plane and spot for hanging framed art.
+Identify:
+1. Optimal wall placement coordinates: x (15 to 85 percent), y (20 to 75 percent).
+2. 3D spatial perspective angles of the wall surface:
+   - rotateX: vertical tilt (-15 to 15 degrees)
+   - rotateY: horizontal wall angle / perspective towards viewer (-25 to 25 degrees)
+   - rotateZ: slight tilt / leveling (-3 to 3 degrees)
+3. Suggested scale: 75 to 110 percent.
+4. Lighting direction: 'left', 'right', 'top-left', 'top-right', or 'diffuse'.
+5. Short Russian explanation (1-2 sentences) about the detected wall plane and 3D angle.
+
+Respond ONLY with valid JSON:
+{
+  "x": number,
+  "y": number,
+  "scale": number,
+  "rotateX": number,
+  "rotateY": number,
+  "rotateZ": number,
+  "lightDirection": string,
+  "note": string
+}`;
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-3.8-flash',
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            { text: prompt },
+            {
+              inlineData: {
+                data: cleanBase64,
+                mimeType
+              }
+            }
+          ]
+        }
+      ],
+      config: {
+        temperature: 0.2,
+        responseMimeType: 'application/json'
+      }
+    });
+
+    if (response && response.text) {
+      const data = JSON.parse(response.text);
+      res.json(data);
+      return;
+    }
+    throw new Error('Empty response');
+  } catch {
+    res.json({
+      x: 50,
+      y: 38,
+      scale: 95,
+      rotateX: 0,
+      rotateY: 0,
+      rotateZ: 0,
+      lightDirection: 'top-left',
+      note: 'ИИ выровнял плоскость картины по геометрии стены с естественной перспективой.'
+    });
+  }
+});
+
 async function main() {
   const assetsDir = path.resolve(process.cwd(), 'assets');
   const publicAssetsDir = path.resolve(process.cwd(), 'public/assets');

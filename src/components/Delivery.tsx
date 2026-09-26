@@ -74,13 +74,15 @@ export const Delivery: React.FC = () => {
                 Мы используем ударопрочные жесткие каркасы и влагозащитные материалы, которые гарантируют сохранность углов, поля и фактуры бумаги даже при транспортировке на дальние расстояния.
               </p>
             </div>
-            <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between">
-              <span className="text-xs text-[#9E8E81]">Доставка осуществляется только по территории России</span>
+            <div className="pt-4 mt-4 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <span className="text-[#9E8E81] leading-relaxed">
+                Доставка осуществляется только по территории России
+              </span>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="text-xs text-[#D99E41] hover:text-[#E8BD6F] underline transition-colors cursor-pointer flex items-center gap-1"
+                className="text-[#D99E41] hover:text-[#E8BD6F] underline transition-colors cursor-pointer inline-flex items-center gap-1.5 self-start sm:self-auto shrink-0 font-medium whitespace-nowrap"
               >
-                <Info className="w-3.5 h-3.5" />
+                <Info className="w-3.5 h-3.5 shrink-0" />
                 <span>Подробные условия</span>
               </button>
             </div>

@@ -11,9 +11,10 @@ interface LightboxProps {
   onClose: () => void;
   onPurchase: (artwork: Artwork) => void;
   onNavigate: (artwork: Artwork) => void;
+  onOpenFitting?: (artwork: Artwork) => void;
 }
 
-export const Lightbox: React.FC<LightboxProps> = ({ artwork, onClose, onPurchase, onNavigate }) => {
+export const Lightbox: React.FC<LightboxProps> = ({ artwork, onClose, onPurchase, onNavigate, onOpenFitting }) => {
   const [isDeliveryOpen, setIsDeliveryOpen] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
 
@@ -194,14 +195,27 @@ export const Lightbox: React.FC<LightboxProps> = ({ artwork, onClose, onPurchase
                 </span>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2.5">
+                {onOpenFitting && (
+                  <button
+                    onClick={() => {
+                      triggerHaptic(20);
+                      onOpenFitting(artwork);
+                    }}
+                    className="w-full py-2.5 px-4 bg-[#231222] hover:bg-[#D99E41]/15 text-[#E8BD6F] hover:text-[#FFF5EA] border border-[#D99E41]/40 hover:border-[#D99E41] font-semibold text-xs tracking-wider uppercase rounded-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                  >
+                    <Sparkles className="w-4 h-4 text-[#D99E41]" />
+                    <span>Примерить в интерьере</span>
+                  </button>
+                )}
+
                 {artwork.inStock && (
                   <button
                     onClick={() => {
                       triggerHaptic(30);
                       onPurchase(artwork);
                     }}
-                    className="flex-1 py-3 px-4 bg-[#D99E41] hover:bg-[#E8BD6F] text-[#160B14] font-semibold text-xs tracking-wider uppercase rounded-sm transition-all duration-300 text-center cursor-pointer shadow-lg shadow-[#D99E41]/20 active:scale-[0.98]"
+                    className="w-full py-3 px-4 bg-[#D99E41] hover:bg-[#E8BD6F] text-[#160B14] font-semibold text-xs tracking-wider uppercase rounded-sm transition-all duration-300 text-center cursor-pointer shadow-lg shadow-[#D99E41]/20 active:scale-[0.98]"
                   >
                     Приобрести оригинал
                   </button>

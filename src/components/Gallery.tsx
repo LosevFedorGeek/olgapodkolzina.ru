@@ -14,6 +14,7 @@ interface GalleryProps {
   onPurchaseArtwork: (artwork: Artwork) => void;
   onAddToCart: (artwork: Artwork) => void;
   onCommissionRequest?: () => void;
+  onOpenFitting?: (artwork?: Artwork) => void;
 }
 
 interface ArtworkCardProps {
@@ -21,6 +22,7 @@ interface ArtworkCardProps {
   idx: number;
   onSelect: (art: Artwork) => void;
   onAction: (art: Artwork) => void;
+  onFitting?: (art: Artwork) => void;
 }
 
 const generateArtSrcSet = (src?: string): string => {
@@ -35,7 +37,7 @@ const generateAdaptiveSizes = (srcSetString: string): string => {
   return '(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(50vw - 28px), (max-width: 1280px) calc(33vw - 24px), 380px';
 };
 
-const ArtworkCard: React.FC<ArtworkCardProps> = ({ art, idx, onSelect, onAction }) => {
+const ArtworkCard: React.FC<ArtworkCardProps> = ({ art, idx, onSelect, onAction, onFitting }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -117,7 +119,7 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ art, idx, onSelect, onAction 
         </div>
       </div>
 
-      <div className="px-3.5 sm:px-4 lg:px-5 pb-4 sm:pb-5 pt-3.5 border-t border-white/5 flex flex-col gap-3 mt-auto">
+      <div className="px-4 sm:px-6 pb-4 sm:pb-5 pt-3.5 border-t border-white/5 flex flex-col gap-3 mt-auto">
         <div className="flex items-center justify-between gap-2">
           {art.inStock ? (
             <div className="min-w-0">
@@ -132,19 +134,36 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ art, idx, onSelect, onAction 
             </div>
           )}
 
-          <button
-            onClick={() => {
-              triggerHaptic(25);
-              onAction(art);
-            }}
-            className={`px-3 sm:px-4 py-2 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-sm transition-all duration-200 cursor-pointer interactive-action-btn whitespace-nowrap shrink-0 ${
-              art.inStock
-                ? 'border border-[#D99E41]/70 bg-[#D99E41]/10 text-[#F5EADB] hover:bg-[#D99E41] hover:text-[#180D16] active:scale-[0.98] shimmer-btn'
-                : 'border border-white/15 text-[#BAA898] hover:border-[#D99E41]/40 hover:text-[#EDE4DC] hover:bg-white/5'
-            }`}
-          >
-            {art.inStock ? 'Приобрести' : 'Узнать детали'}
-          </button>
+          <div className="flex items-center gap-1.5 shrink-0">
+            {onFitting && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  triggerHaptic(20);
+                  onFitting(art);
+                }}
+                className="p-2 rounded-sm border border-[#D99E41]/35 hover:border-[#D99E41] hover:bg-[#D99E41]/15 text-[#E8BD6F] transition-colors cursor-pointer"
+                title="Примерить картину в интерьере"
+                aria-label="Примерить в интерьере"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+              </button>
+            )}
+
+            <button
+              onClick={() => {
+                triggerHaptic(25);
+                onAction(art);
+              }}
+              className={`px-3 sm:px-4 py-2 text-[11px] sm:text-xs font-semibold uppercase tracking-wider rounded-sm transition-all duration-200 cursor-pointer interactive-action-btn whitespace-nowrap shrink-0 ${
+                art.inStock
+                  ? 'border border-[#D99E41]/70 bg-[#D99E41]/10 text-[#F5EADB] hover:bg-[#D99E41] hover:text-[#180D16] active:scale-[0.98] shimmer-btn'
+                  : 'border border-white/15 text-[#BAA898] hover:border-[#D99E41]/40 hover:text-[#EDE4DC] hover:bg-white/5'
+              }`}
+            >
+              {art.inStock ? 'Приобрести' : 'Узнать детали'}
+            </button>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -155,7 +174,8 @@ export const Gallery: React.FC<GalleryProps> = ({
   artworks,
   onSelectArtwork,
   onPurchaseArtwork,
-  onCommissionRequest
+  onCommissionRequest,
+  onOpenFitting
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(false);
@@ -242,6 +262,7 @@ export const Gallery: React.FC<GalleryProps> = ({
               idx={idx}
               onSelect={onSelectArtwork}
               onAction={handleCardAction}
+              onFitting={onOpenFitting}
             />
           ))}
         </div>
@@ -282,9 +303,11 @@ export const Gallery: React.FC<GalleryProps> = ({
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-[#F7EFE6] mb-1">Сертификат подлинности</h4>
+                <h4 className="text-sm font-semibold text-[#F7EFE6] mb-1">
+                  <span className="font-sans font-bold text-[#E8BD6F] tracking-tight">100%</span> авторский оригинал
+                </h4>
                 <p className="text-xs text-[#A8988B] leading-relaxed">
-                  К каждому оригинальному произведению прилагается авторский именной сертификат с личной подписью художника.
+                  Каждая работа создана вручную в единственном экземпляре и содержит личную подпись художника.
                 </p>
               </div>
             </div>
@@ -315,7 +338,7 @@ export const Gallery: React.FC<GalleryProps> = ({
 
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-sm bg-[#2B1728] text-[#E8BD6F] flex items-center justify-center shrink-0 border border-[#D99E41]/20">
-                <Sparkles className="w-5 h-5" />
+                <Sparkles className="w-5 h-5 text-[#D99E41]" />
               </div>
               <div>
                 <h4 className="text-sm font-semibold text-[#F7EFE6] mb-1">Примерка в интерьере</h4>

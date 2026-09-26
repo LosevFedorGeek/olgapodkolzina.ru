@@ -9,9 +9,9 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
   return (
-    <footer id="contacts" className="relative bg-[#0C050B] text-[#DDD0C4] border-t border-white/10 pt-8 sm:pt-10 pb-6 sm:pb-8 overflow-hidden">
+    <footer id="contacts" className="relative bg-[#0C050B] text-[#DDD0C4] border-t border-white/10 pt-7 sm:pt-9 pb-4 sm:pb-5 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-5 border-b border-white/10 gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-4 sm:pb-5 border-b border-white/10 gap-4">
           <div>
             <h2 className="text-xl sm:text-2xl font-serif text-[#F8F1E9] tracking-tight">
               {ARTIST_CONTACTS.name}
@@ -30,7 +30,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 py-5 border-b border-white/10">
           <div className="space-y-3">
             <h3 className="text-xs uppercase tracking-[0.2em] text-[#D99E41] font-semibold">
               СВЯЗЬ С ХУДОЖНИКОМ
@@ -89,28 +89,30 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
           </div>
         </div>
 
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8E7E72] pb-6 sm:pb-4">
-          <div className="text-center sm:text-left">
-            <span>© 2026 Ольга Подколзина. Все права защищены.</span>
+        <div className="pt-4 sm:pt-5 border-t border-white/5 flex flex-col lg:flex-row items-center justify-between gap-3.5 text-xs text-[#8E7E72] pb-1">
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 text-center lg:text-left">
+            <span className="whitespace-nowrap">© 2026 Ольга Подколзина. Все права защищены.</span>
+            <span className="hidden sm:inline text-white/20">•</span>
+            <span className="text-[#9B8C80] text-[11px] whitespace-nowrap">
+              Бабаево · Вологодская область
+            </span>
           </div>
 
-          <a
-            href="https://theodorelosev.ru"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Сайт разработчика Theodore Losev"
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-[#D99E41]/35 hover:border-[#D99E41] hover:bg-white/10 text-[#EDE4DC] shadow-sm transition-all group cursor-pointer"
-          >
-            <span className="text-[#A8988B] group-hover:text-[#EDE4DC] transition-colors">
-              Дизайн и разработка сайта:
-            </span>
-            <span className="text-[#E8BD6F] group-hover:text-[#FFD88D] font-medium tracking-wide underline sm:no-underline sm:group-hover:underline transition-colors">
-              Theodore Losev
-            </span>
-          </a>
-
-          <div className="text-center sm:text-right text-[#9B8C80] text-[11px] sm:pr-24">
-            <span>Бабаево · Вологодская область</span>
+          <div className="shrink-0 flex items-center">
+            <a
+              href="https://theodorelosev.ru"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Сайт разработчика Theodore Losev"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#220F1F] border border-[#D99E41]/35 hover:border-[#D99E41] hover:bg-[#220F1F]/60 hover:backdrop-blur-md hover:shadow-[0_0_18px_rgba(217,158,65,0.3)] text-[#EDE4DC] shadow-sm transition-all duration-300 group cursor-pointer whitespace-nowrap"
+            >
+              <span className="text-[#A8988B] group-hover:text-[#EDE4DC] transition-colors whitespace-nowrap text-xs">
+                Дизайн и разработка сайта:
+              </span>
+              <span className="text-[#E8BD6F] group-hover:text-[#FFD88D] font-medium tracking-wide underline sm:no-underline sm:group-hover:underline transition-colors whitespace-nowrap text-xs">
+                Theodore Losev
+              </span>
+            </a>
           </div>
         </div>
       </div>

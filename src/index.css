@@ -34,6 +34,32 @@
     background: rgba(217, 158, 65, 0.35);
     color: #fff9f2;
   }
+
+  button,
+  [role="button"] {
+    opacity: 1;
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                backdrop-filter 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                -webkit-backdrop-filter 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.25s ease,
+                transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  button:not(:disabled):hover,
+  [role="button"]:not(:disabled):hover {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(38, 18, 35, 0.78);
+  }
+
+  button[class*="bg-[#D99E41]"]:not(:disabled):hover,
+  button[class*="bg-[#d99e41]"]:not(:disabled):hover {
+    background-color: rgba(217, 158, 65, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 
 .passepartout-shadow {

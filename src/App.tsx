@@ -17,6 +17,7 @@ const FAQ = lazy(() => import('./components/FAQ').then((m) => ({ default: m.FAQ 
 const Modal = lazy(() => import('./components/Modal').then((m) => ({ default: m.Modal })));
 const Lightbox = lazy(() => import('./components/Lightbox').then((m) => ({ default: m.Lightbox })));
 const CartModal = lazy(() => import('./components/CartModal').then((m) => ({ default: m.CartModal })));
+const InteriorFittingModal = lazy(() => import('./components/InteriorFittingModal').then((m) => ({ default: m.InteriorFittingModal })));
 
 export function App() {
   const [artworks] = useState<Artwork[]>(ARTWORKS);
@@ -34,6 +35,8 @@ export function App() {
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isFittingOpen, setIsFittingOpen] = useState(false);
+  const [fittingArtwork, setFittingArtwork] = useState<Artwork | null>(null);
   const [inquiryData, setInquiryData] = useState<InquiryData | null>(null);
 
   useEffect(() => {
@@ -41,6 +44,11 @@ export function App() {
       localStorage.setItem('podkolzina_cart', JSON.stringify(cartItems));
     } catch {}
   }, [cartItems]);
+
+  const handleOpenFitting = (art?: Artwork) => {
+    setFittingArtwork(art || artworks[0]);
+    setIsFittingOpen(true);
+  };
 
   const handleOpenContact = (topic?: string) => {
     setInquiryData({
@@ -141,6 +149,7 @@ export function App() {
         onOpenContact={handleOpenContact}
         onOpenCart={() => setIsCartOpen(true)}
         cartCount={cartItems.length}
+        onOpenFitting={() => handleOpenFitting()}
       />
 
       <main className="flex-grow">
@@ -166,6 +175,7 @@ export function App() {
             onPurchaseArtwork={handlePurchaseArtwork}
             onAddToCart={handleAddToCart}
             onCommissionRequest={handleCommissionRequest}
+            onOpenFitting={handleOpenFitting}
           />
           <Education
             services={services}
@@ -188,6 +198,7 @@ export function App() {
             onClose={() => setSelectedArtwork(null)}
             onPurchase={handlePurchaseArtwork}
             onNavigate={setSelectedArtwork}
+            onOpenFitting={handleOpenFitting}
           />
         )}
 
@@ -198,6 +209,16 @@ export function App() {
             items={cartItems}
             onRemoveItem={handleRemoveCartItem}
             onClearCart={handleClearCart}
+          />
+        )}
+
+        {isFittingOpen && (
+          <InteriorFittingModal
+            isOpen={isFittingOpen}
+            onClose={() => setIsFittingOpen(false)}
+            initialArtwork={fittingArtwork}
+            onPurchaseArtwork={handlePurchaseArtwork}
+            onOpenContact={handleOpenContact}
           />
         )}
 

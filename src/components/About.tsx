@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { SectionHeader } from './SectionHeader';
+import { AnimatedCounter } from './AnimatedCounter';
 
 export const About: React.FC = () => {
   const [imgError, setImgError] = useState(false);
@@ -23,15 +24,18 @@ export const About: React.FC = () => {
 
   const stats = [
     {
-      value: '30+ лет',
+      num: 30,
+      suffix: '+ лет',
       label: 'в\u00A0искусстве'
     },
     {
-      value: '25 лет',
+      num: 25,
+      suffix: ' лет',
       label: 'педагогического стажа'
     },
     {
-      value: '100+',
+      num: 100,
+      suffix: '+',
       label: 'картин и\u00A0учеников'
     }
   ];
@@ -82,7 +86,7 @@ export const About: React.FC = () => {
               {!imgError ? (
                 <img
                   src="/assets/Rectangle.jpg"
-                  alt="Творческая палитра и мастерская Ольги Подколзиной"
+                  alt="Натюрморт с цветами – живопись Ольги Подколзиной"
                   loading="lazy"
                   decoding="async"
                   width={600}
@@ -113,10 +117,10 @@ export const About: React.FC = () => {
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.5, delay: idx * 0.12, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -4 }}
-              className="p-6 sm:p-8 rounded-sm bg-[#22121F]/80 border border-white/5 hover:border-[#D99E41]/50 transition-all duration-300 relative group"
+              className="p-6 sm:p-8 rounded-sm bg-[#22121F] border border-white/5 hover:border-[#D99E41]/50 hover:bg-[#22121F]/60 hover:backdrop-blur-md hover:shadow-[0_0_24px_rgba(217,158,65,0.25)] transition-all duration-300 relative group"
             >
               <div className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#E8BD6F] font-normal mb-2 tracking-tight whitespace-nowrap">
-                {stat.value}
+                <AnimatedCounter value={stat.num} suffix={stat.suffix} />
               </div>
               <div className="w-8 h-[2px] bg-[#D99E41] mb-3 transition-all duration-300 group-hover:w-16" />
               <div className="text-sm text-[#BBA99A] font-light whitespace-nowrap">
