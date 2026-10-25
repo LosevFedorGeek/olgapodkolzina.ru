@@ -11,6 +11,8 @@ interface CartModalProps {
   onRemoveItem: (id: string) => void;
   onClearCart: () => void;
   onOpenArtDetail?: (id: string) => void;
+  onOpenPrivacy?: () => void;
+  onOpenTerms?: () => void;
 }
 
 export const CartModal: React.FC<CartModalProps> = ({
@@ -19,6 +21,8 @@ export const CartModal: React.FC<CartModalProps> = ({
   items,
   onRemoveItem,
   onClearCart,
+  onOpenPrivacy,
+  onOpenTerms
 }) => {
   const [deliveryMethod, setDeliveryMethod] = useState<'delivery_cdek' | 'delivery_post' | 'pickup'>('delivery_cdek');
   const [formData, setFormData] = useState({
@@ -26,7 +30,8 @@ export const CartModal: React.FC<CartModalProps> = ({
     phone: '',
     email: '',
     address: '',
-    comment: ''
+    comment: '',
+    botcheck: ''
   });
   const [step, setStep] = useState<'cart' | 'checkout' | 'success'>('cart');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,6 +73,13 @@ export const CartModal: React.FC<CartModalProps> = ({
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.phone.trim()) return;
+
+    if (formData.botcheck) {
+      setIsSubmitting(false);
+      setStep('success');
+      onClearCart();
+      return;
+    }
 
     setIsSubmitting(true);
     const newOrderId = `OP-${Date.now().toString().slice(-5)}`;
@@ -341,6 +353,17 @@ export const CartModal: React.FC<CartModalProps> = ({
                 />
               </div>
 
+              <input
+                type="checkbox"
+                name="botcheck"
+                className="hidden"
+                style={{ display: 'none' }}
+                tabIndex={-1}
+                autoComplete="off"
+                checked={Boolean(formData.botcheck)}
+                onChange={(e) => setFormData({ ...formData, botcheck: e.target.checked ? 'bot' : '' })}
+              />
+
               <div className="flex gap-3 pt-2">
                 <button
                   type="button"
@@ -361,7 +384,31 @@ export const CartModal: React.FC<CartModalProps> = ({
               </div>
 
               <p className="text-center text-[11px] text-[#8C7C6F] pt-1 leading-relaxed">
-                Нажимая кнопку, вы&nbsp;подтверждаете согласие на&nbsp;конфиденциальную обработку контактных данных.
+                Нажимая кнопку, вы подтверждаете согласие с{' '}
+                {onOpenPrivacy ? (
+                  <button
+                    type="button"
+                    onClick={onOpenPrivacy}
+                    className="underline text-[#D99E41] hover:text-[#E8BD6F] cursor-pointer"
+                  >
+                    Политикой конфиденциальности (152-ФЗ)
+                  </button>
+                ) : (
+                  <span>Политикой конфиденциальности</span>
+                )}
+                {' '}и{' '}
+                {onOpenTerms ? (
+                  <button
+                    type="button"
+                    onClick={onOpenTerms}
+                    className="underline text-[#D99E41] hover:text-[#E8BD6F] cursor-pointer"
+                  >
+                    условиями покупки
+                  </button>
+                ) : (
+                  <span>условиями покупки</span>
+                )}
+                .
               </p>
             </form>
           )}

@@ -20,7 +20,6 @@ export const About: React.FC = () => {
 
   const yGlowRight = useTransform(smoothProgress, [0, 1], [-40, 40]);
   const yGlowLeft = useTransform(smoothProgress, [0, 1], [30, -30]);
-  const yImage = useTransform(smoothProgress, [0, 1], [25, -25]);
 
   const stats = [
     {
@@ -80,12 +79,15 @@ export const About: React.FC = () => {
 
           <div className="lg:col-span-5 flex justify-center">
             <motion.div
-              style={{ y: yImage }}
-              className="relative w-full max-w-md rounded-sm overflow-hidden border border-[#D99E41]/30 shadow-2xl group bg-[#251522] will-change-transform"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-md rounded-sm overflow-hidden border border-[#D99E41]/30 shadow-2xl group bg-[#251522]"
             >
               {!imgError ? (
                 <img
-                  src="/assets/aistudio/K37A4145_184dd679.jpg"
+                  src="/assets/aistudio/author_portrait_optimized.jpg"
                   alt="Художник Ольга Подколзина"
                   loading="lazy"
                   decoding="async"
@@ -93,7 +95,8 @@ export const About: React.FC = () => {
                   height={800}
                   referrerPolicy="no-referrer"
                   onError={() => setImgError(true)}
-                  className="w-full aspect-[3/4] object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="w-full aspect-[3/4] object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105 [backface-visibility:hidden] transform-gpu"
+                  style={{ imageRendering: 'auto' }}
                 />
               ) : (
                 <div className="w-full aspect-[3/4] bg-gradient-to-tr from-[#1b0d18] via-[#2d1729] to-[#3f1e39] flex items-center justify-center p-6 text-center">

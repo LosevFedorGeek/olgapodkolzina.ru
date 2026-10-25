@@ -5,9 +5,15 @@ import { SocialIconGroup } from './SocialIconGroup';
 
 interface FooterProps {
   onOpenContact: (topic?: string) => void;
+  onOpenPrivacy?: () => void;
+  onOpenTerms?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
+export const Footer: React.FC<FooterProps> = ({
+  onOpenContact,
+  onOpenPrivacy,
+  onOpenTerms
+}) => {
   return (
     <footer id="contacts" className="relative bg-[#0C050B] text-[#DDD0C4] border-t border-white/10 pt-7 sm:pt-9 pb-4 sm:pb-5 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,30 +95,58 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
           </div>
         </div>
 
-        <div className="pt-4 sm:pt-5 border-t border-white/5 flex flex-col lg:flex-row items-center justify-between gap-3.5 text-xs text-[#8E7E72] pb-1">
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 text-center lg:text-left">
-            <span className="whitespace-nowrap">© 2026 Ольга Подколзина. Все права защищены.</span>
-            <span className="hidden sm:inline text-white/20">•</span>
-            <span className="text-[#9B8C80] text-[11px] whitespace-nowrap">
-              Бабаево · Вологодская область
-            </span>
+        <div className="pt-4 sm:pt-5 border-t border-white/5 flex flex-col gap-3 text-xs text-[#8E7E72] pb-1">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-[11px] text-[#A8988B] border-b border-white/5 pb-3">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
+              {onOpenPrivacy && (
+                <button
+                  type="button"
+                  onClick={onOpenPrivacy}
+                  className="hover:text-[#E8BD6F] underline transition-colors cursor-pointer text-left"
+                >
+                  Политика конфиденциальности (152-ФЗ)
+                </button>
+              )}
+              {onOpenTerms && (
+                <button
+                  type="button"
+                  onClick={onOpenTerms}
+                  className="hover:text-[#E8BD6F] underline transition-colors cursor-pointer text-left"
+                >
+                  Пользовательское соглашение и авторские права
+                </button>
+              )}
+            </div>
+            <div className="text-[#8E7E72] text-[11px]">
+              Защита данных в соответствии с законодательством РФ
+            </div>
           </div>
 
-          <div className="shrink-0 flex items-center">
-            <a
-              href="https://theodorelosev.ru"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Сайт разработчика Theodore Losev"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#220F1F] border border-[#D99E41]/35 hover:border-[#D99E41] hover:bg-[#220F1F]/60 hover:backdrop-blur-md hover:shadow-[0_0_18px_rgba(217,158,65,0.3)] text-[#EDE4DC] shadow-sm transition-all duration-300 group cursor-pointer whitespace-nowrap"
-            >
-              <span className="text-[#A8988B] group-hover:text-[#EDE4DC] transition-colors whitespace-nowrap text-xs">
-                Дизайн и разработка сайта:
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-3.5 pt-1">
+            <div className="flex flex-wrap items-baseline justify-center lg:justify-start gap-2 sm:gap-2.5 text-center lg:text-left text-xs leading-normal">
+              <span className="text-[#8E7E72] whitespace-nowrap">© 2026 Ольга Подколзина. Все права защищены.</span>
+              <span className="hidden sm:inline text-white/20 select-none" aria-hidden="true">•</span>
+              <span className="text-[#9B8C80] whitespace-nowrap">
+                Бабаево · Вологодская область
               </span>
-              <span className="text-[#E8BD6F] group-hover:text-[#FFD88D] font-medium tracking-wide underline sm:no-underline sm:group-hover:underline transition-colors whitespace-nowrap text-xs">
-                Theodore Losev
-              </span>
-            </a>
+            </div>
+
+            <div className="shrink-0 flex items-center">
+              <a
+                href="https://theodorelosev.ru"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Сайт разработчика Theodore Losev"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#220F1F] border border-[#D99E41]/35 hover:border-[#D99E41] hover:bg-[#220F1F]/60 hover:backdrop-blur-md hover:shadow-[0_0_18px_rgba(217,158,65,0.3)] text-[#EDE4DC] shadow-sm transition-all duration-300 group cursor-pointer whitespace-nowrap"
+              >
+                <span className="text-[#A8988B] group-hover:text-[#EDE4DC] transition-colors whitespace-nowrap text-xs">
+                  Дизайн и разработка сайта:
+                </span>
+                <span className="text-[#E8BD6F] group-hover:text-[#FFD88D] font-medium tracking-wide underline sm:no-underline sm:group-hover:underline transition-colors whitespace-nowrap text-xs">
+                  Theodore Losev
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

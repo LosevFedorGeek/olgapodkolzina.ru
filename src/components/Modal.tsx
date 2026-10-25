@@ -7,9 +7,17 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   inquiry: InquiryData | null;
+  onOpenPrivacy?: () => void;
+  onOpenTerms?: () => void;
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, inquiry }) => {
+export const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  inquiry,
+  onOpenPrivacy,
+  onOpenTerms
+}) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -284,7 +292,31 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, inquiry }) => {
               </button>
 
               <p className="text-center text-[11px] text-[#8C7C6F] pt-2 leading-relaxed">
-                Нажимая кнопку, вы&nbsp;подтверждаете согласие на&nbsp;конфиденциальную обработку контактных данных.
+                Нажимая кнопку, вы подтверждаете согласие с{' '}
+                {onOpenPrivacy ? (
+                  <button
+                    type="button"
+                    onClick={onOpenPrivacy}
+                    className="underline text-[#D99E41] hover:text-[#E8BD6F] cursor-pointer"
+                  >
+                    Политикой конфиденциальности (152-ФЗ)
+                  </button>
+                ) : (
+                  <span>Политикой конфиденциальности</span>
+                )}
+                {' '}и{' '}
+                {onOpenTerms ? (
+                  <button
+                    type="button"
+                    onClick={onOpenTerms}
+                    className="underline text-[#D99E41] hover:text-[#E8BD6F] cursor-pointer"
+                  >
+                    условиями соглашения
+                  </button>
+                ) : (
+                  <span>условиями соглашения</span>
+                )}
+                .
               </p>
             </form>
           </div>

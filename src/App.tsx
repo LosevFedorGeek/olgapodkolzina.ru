@@ -13,6 +13,8 @@ import { CartModal } from './components/CartModal';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
 import { ArtCursor } from './components/ArtCursor';
+import { PrivacyPolicyModal, TermsModal } from './components/LegalModals';
+import { CookieConsent } from './components/CookieConsent';
 import { INITIAL_ARTWORKS, INITIAL_SERVICES } from './data/artworks';
 import { Artwork, InquiryData, CartItem, ServiceItem } from './types';
 
@@ -32,6 +34,8 @@ export function App() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [currentInquiry, setCurrentInquiry] = useState<InquiryData | null>(null);
   const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
 
@@ -162,7 +166,11 @@ export function App() {
         <FAQ />
       </main>
 
-      <Footer onOpenContact={handleOpenContact} />
+      <Footer
+        onOpenContact={handleOpenContact}
+        onOpenPrivacy={() => setIsPrivacyOpen(true)}
+        onOpenTerms={() => setIsTermsOpen(true)}
+      />
 
       <Lightbox
         artwork={selectedArtwork}
@@ -177,13 +185,37 @@ export function App() {
         items={cart}
         onRemoveItem={handleRemoveFromCart}
         onClearCart={handleClearCart}
+        onOpenPrivacy={() => setIsPrivacyOpen(true)}
+        onOpenTerms={() => setIsTermsOpen(true)}
       />
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         inquiry={currentInquiry}
+        onOpenPrivacy={() => setIsPrivacyOpen(true)}
+        onOpenTerms={() => setIsTermsOpen(true)}
       />
+
+      <PrivacyPolicyModal
+        isOpen={isPrivacyOpen}
+        onClose={() => setIsPrivacyOpen(false)}
+        onSwitchToOther={() => {
+          setIsPrivacyOpen(false);
+          setIsTermsOpen(true);
+        }}
+      />
+
+      <TermsModal
+        isOpen={isTermsOpen}
+        onClose={() => setIsTermsOpen(false)}
+        onSwitchToOther={() => {
+          setIsTermsOpen(false);
+          setIsPrivacyOpen(true);
+        }}
+      />
+
+      <CookieConsent onOpenPrivacy={() => setIsPrivacyOpen(true)} />
 
       <ScrollToTopButton />
     </div>

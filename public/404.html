@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Страница не найдена | Ольга Подколзина</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0C050B;
+      color: #EDE4DC;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    .container {
+      max-width: 560px;
+      width: 100%;
+      background: #180D18;
+      border: 1px solid rgba(217, 158, 65, 0.35);
+      border-radius: 4px;
+      padding: 48px 32px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 2;
+    }
+    .code {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(4rem, 10vw, 7rem);
+      font-weight: 700;
+      color: #E8BD6F;
+      line-height: 1;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      text-shadow: 0 0 30px rgba(217, 158, 65, 0.25);
+    }
+    .title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: #F8F1E9;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .desc {
+      font-size: 14px;
+      color: #A8988B;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      font-weight: 300;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: #D99E41;
+      color: #160B14;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(217, 158, 65, 0.25);
+    }
+    .btn:hover {
+      background: #E8BD6F;
+      box-shadow: 0 6px 20px rgba(217, 158, 65, 0.4);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="code">404</div>
+    <h1 class="title">Страница не найдена</h1>
+    <p class="desc">
+      Возможно, страница была перемещена или адрес введен с ошибкой. Приглашаем вернуться в галерею авторской живописи Ольги Подколзиной.
+    </p>
+    <a href="/" class="btn">Вернуться в галерею</a>
+  </main>
+</body>
+</html>
