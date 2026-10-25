@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Trash2, ShieldCheck, Check, Clock, Send, CreditCard, ChevronRight } from 'lucide-react';
 import { CartItem } from '../types';
+import { ARTIST_CONTACTS } from '../data/artworks';
 import { ArtCanvas } from './ArtCanvas';
 import { triggerHaptic } from '../utils/haptics';
 
@@ -454,7 +455,7 @@ export const CartModal: React.FC<CartModalProps> = ({
 
               <div className="pt-3 flex flex-col sm:flex-row gap-3 justify-center">
                 <a
-                  href="https://t.me"
+                  href={ARTIST_CONTACTS.telegramUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xs bg-[#2b1828] border border-white/10 hover:border-[#D99E41]/50 text-xs font-semibold uppercase tracking-wider text-[#EDE4DC] transition-colors"
