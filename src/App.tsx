@@ -1,235 +1,189 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { Gallery } from './components/Gallery';
 import { About } from './components/About';
+import { Education } from './components/Education';
+import { Delivery } from './components/Delivery';
+import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
-import { GeminiArtAdvisor } from './components/GeminiArtAdvisor';
-import { ArtCursor } from './components/ArtCursor';
+import { Modal } from './components/Modal';
+import { Lightbox } from './components/Lightbox';
+import { CartModal } from './components/CartModal';
 import { ScrollProgressBar } from './components/ScrollProgressBar';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { ArtCursor } from './components/ArtCursor';
+import { INITIAL_ARTWORKS, INITIAL_SERVICES } from './data/artworks';
 import { Artwork, InquiryData, CartItem, ServiceItem } from './types';
-import { ARTWORKS, INITIAL_SERVICES } from './data/artworks';
-
-const Gallery = lazy(() => import('./components/Gallery').then((m) => ({ default: m.Gallery })));
-const Education = lazy(() => import('./components/Education').then((m) => ({ default: m.Education })));
-const Delivery = lazy(() => import('./components/Delivery').then((m) => ({ default: m.Delivery })));
-const FAQ = lazy(() => import('./components/FAQ').then((m) => ({ default: m.FAQ })));
-const Modal = lazy(() => import('./components/Modal').then((m) => ({ default: m.Modal })));
-const Lightbox = lazy(() => import('./components/Lightbox').then((m) => ({ default: m.Lightbox })));
-const CartModal = lazy(() => import('./components/CartModal').then((m) => ({ default: m.CartModal })));
-const InteriorFittingModal = lazy(() => import('./components/InteriorFittingModal').then((m) => ({ default: m.InteriorFittingModal })));
 
 export function App() {
-  const [artworks] = useState<Artwork[]>(ARTWORKS);
+  const [artworks] = useState<Artwork[]>(INITIAL_ARTWORKS);
   const [services] = useState<ServiceItem[]>(INITIAL_SERVICES);
 
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+  const [cart, setCart] = useState<CartItem[]>(() => {
     try {
-      const saved = localStorage.getItem('podkolzina_cart');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
+      const saved = localStorage.getItem('olga_cart_v1');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
     }
+    return [];
   });
 
-  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isFittingOpen, setIsFittingOpen] = useState(false);
-  const [fittingArtwork, setFittingArtwork] = useState<Artwork | null>(null);
-  const [inquiryData, setInquiryData] = useState<InquiryData | null>(null);
+  const [currentInquiry, setCurrentInquiry] = useState<InquiryData | null>(null);
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
 
   useEffect(() => {
     try {
-      localStorage.setItem('podkolzina_cart', JSON.stringify(cartItems));
-    } catch {}
-  }, [cartItems]);
-
-  const handleOpenFitting = (art?: Artwork) => {
-    setFittingArtwork(art || artworks[0]);
-    setIsFittingOpen(true);
-  };
+      localStorage.setItem('olga_cart_v1', JSON.stringify(cart));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [cart]);
 
   const handleOpenContact = (topic?: string) => {
-    setInquiryData({
+    setCurrentInquiry({
       type: 'general',
-      itemTitle: topic || 'Общий запрос / Консультация'
+      itemTitle: topic || 'Индивидуальный заказ или консультация'
     });
     setIsModalOpen(true);
   };
 
-  const handleCommissionRequest = () => {
-    setInquiryData({
-      type: 'commission',
-      itemTitle: 'Индивидуальный заказ картины'
+  const handleAddToCartArtwork = (artwork: Artwork) => {
+    setCart((prev) => {
+      if (prev.some((i) => i.id === artwork.id)) return prev;
+      return [
+        ...prev,
+        {
+          id: artwork.id,
+          type: 'artwork',
+          title: `Картина «${artwork.title}»`,
+          technique: artwork.technique,
+          size: artwork.size,
+          price: artwork.price ?? 0,
+          priceFormatted: artwork.priceFormatted,
+          imageSrc: artwork.imageSrc
+        }
+      ];
     });
-    setIsModalOpen(true);
-  };
-
-  const handleSelectArtwork = (art: Artwork) => {
-    setSelectedArtwork(art);
-  };
-
-  const handleAddToCart = (art: Artwork) => {
-    const existing = cartItems.find((i) => i.id === art.id);
-    if (!existing) {
-      const newItem: CartItem = {
-        id: art.id,
-        title: art.title,
-        price: art.price || 0,
-        priceFormatted: art.priceFormatted,
-        technique: art.technique,
-        size: art.size,
-        imageSrc: art.imageSrc,
-        type: 'artwork'
-      };
-      setCartItems((prev) => [...prev, newItem]);
-    }
     setIsCartOpen(true);
   };
 
-  const handleAddServiceToCart = (service: ServiceItem) => {
-    const numPrice = parseInt(service.price.replace(/\D/g, ''), 10) || 0;
-    const newItem: CartItem = {
-      id: service.id,
-      title: service.title,
-      price: numPrice,
-      priceFormatted: service.price,
-      type: 'masterclass'
-    };
-    setCartItems((prev) => [...prev, newItem]);
+  const handleAddToCartService = (service: ServiceItem) => {
+    const numericPrice = parseInt(service.price.replace(/\D/g, ''), 10) || 0;
+    setCart((prev) => {
+      if (prev.some((i) => i.id === service.id)) return prev;
+      return [
+        ...prev,
+        {
+          id: service.id,
+          type: 'masterclass',
+          title: service.title,
+          technique: service.period,
+          price: numericPrice,
+          priceFormatted: service.price
+        }
+      ];
+    });
     setIsCartOpen(true);
   };
 
-  const handlePurchaseArtwork = (art: Artwork) => {
-    handleAddToCart(art);
-  };
-
-  const handleRemoveCartItem = (id: string) => {
-    setCartItems((prev) => prev.filter((i) => i.id !== id));
+  const handleRemoveFromCart = (id: string) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
   const handleClearCart = () => {
-    setCartItems([]);
+    setCart([]);
   };
 
-  const handleRegisterEducation = (courseTitle: string, price: string) => {
-    setInquiryData({
+  const handlePurchaseArtwork = (artwork: Artwork) => {
+    setSelectedArtwork(null);
+    handleAddToCartArtwork(artwork);
+  };
+
+  const handleRegisterCourse = (courseTitle: string, price: string) => {
+    setCurrentInquiry({
       type: 'masterclass',
-      itemTitle: `Запись: «${courseTitle}»`,
+      itemTitle: courseTitle,
       price: price
     });
     setIsModalOpen(true);
   };
 
-  const handleHeroExploreGallery = () => {
-    const el = document.getElementById('gallery');
+  const scrollToSection = (id: string) => {
+    const el = document.querySelector(id);
     if (el) {
-      el.scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const handleHeroOpenEducation = () => {
-    const el = document.getElementById('education');
-    if (el) {
-      el.scrollIntoView({
-        behavior: 'smooth'
-      });
+      const offset = 80;
+      const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#180E17] text-[#EDE4DC] flex flex-col selection:bg-[#D99E41]/30 selection:text-[#FFF5EA] overflow-x-hidden">
-      <ScrollProgressBar />
+    <div className="min-h-screen bg-[#180E17] text-[#EDE4DC] flex flex-col selection:bg-[#D99E41]/30 selection:text-[#FFF5EA]">
       <ArtCursor />
+      <ScrollProgressBar />
 
       <Header
         onOpenContact={handleOpenContact}
         onOpenCart={() => setIsCartOpen(true)}
-        cartCount={cartItems.length}
-        onOpenFitting={() => handleOpenFitting()}
+        cartCount={cart.length}
       />
 
       <main className="flex-grow">
         <Hero
           artworks={artworks}
-          onExploreGallery={handleHeroExploreGallery}
-          onExploreEducation={handleHeroOpenEducation}
-          onSelectArtwork={handleSelectArtwork}
+          onExploreGallery={() => scrollToSection('#gallery')}
+          onExploreEducation={() => scrollToSection('#education')}
+          onSelectArtwork={(art) => setSelectedArtwork(art)}
           onPurchaseArtwork={handlePurchaseArtwork}
         />
+
+        <Gallery
+          artworks={artworks}
+          onSelectArtwork={(art) => setSelectedArtwork(art)}
+          onPurchaseArtwork={handlePurchaseArtwork}
+          onAddToCart={handleAddToCartArtwork}
+          onCommissionRequest={() => handleOpenContact('Индивидуальный заказ авторского полотна')}
+        />
+
         <About />
 
-        <Suspense
-          fallback={
-            <div className="py-24 text-center text-[#D99E41] font-serif text-lg animate-pulse">
-              Загрузка коллекции живописи...
-            </div>
-          }
-        >
-          <Gallery
-            artworks={artworks}
-            onSelectArtwork={handleSelectArtwork}
-            onPurchaseArtwork={handlePurchaseArtwork}
-            onAddToCart={handleAddToCart}
-            onCommissionRequest={handleCommissionRequest}
-            onOpenFitting={handleOpenFitting}
-          />
-          <Education
-            services={services}
-            onRegister={handleRegisterEducation}
-            onAddToCart={handleAddServiceToCart}
-          />
-          <Delivery />
-          <FAQ />
-        </Suspense>
+        <Education
+          services={services}
+          onRegister={handleRegisterCourse}
+          onAddToCart={handleAddToCartService}
+        />
+
+        <Delivery />
+
+        <FAQ />
       </main>
 
       <Footer onOpenContact={handleOpenContact} />
 
-      <GeminiArtAdvisor />
+      <Lightbox
+        artwork={selectedArtwork}
+        onClose={() => setSelectedArtwork(null)}
+        onPurchase={handlePurchaseArtwork}
+        onNavigate={(art) => setSelectedArtwork(art)}
+      />
 
-      <Suspense fallback={null}>
-        {selectedArtwork && (
-          <Lightbox
-            artwork={selectedArtwork}
-            onClose={() => setSelectedArtwork(null)}
-            onPurchase={handlePurchaseArtwork}
-            onNavigate={setSelectedArtwork}
-            onOpenFitting={handleOpenFitting}
-          />
-        )}
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        items={cart}
+        onRemoveItem={handleRemoveFromCart}
+        onClearCart={handleClearCart}
+      />
 
-        {isCartOpen && (
-          <CartModal
-            isOpen={isCartOpen}
-            onClose={() => setIsCartOpen(false)}
-            items={cartItems}
-            onRemoveItem={handleRemoveCartItem}
-            onClearCart={handleClearCart}
-          />
-        )}
-
-        {isFittingOpen && (
-          <InteriorFittingModal
-            isOpen={isFittingOpen}
-            onClose={() => setIsFittingOpen(false)}
-            initialArtwork={fittingArtwork}
-            onPurchaseArtwork={handlePurchaseArtwork}
-            onOpenContact={handleOpenContact}
-          />
-        )}
-
-        {isModalOpen && (
-          <Modal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            inquiry={inquiryData}
-          />
-        )}
-      </Suspense>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        inquiry={currentInquiry}
+      />
 
       <ScrollToTopButton />
     </div>

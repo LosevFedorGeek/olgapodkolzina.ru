@@ -78,32 +78,37 @@ export const About: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 flex justify-center">
             <motion.div
               style={{ y: yImage }}
-              className="relative rounded-sm overflow-hidden border border-white/10 shadow-2xl group bg-[#251522] will-change-transform"
+              className="relative w-full max-w-md rounded-sm overflow-hidden border border-[#D99E41]/30 shadow-2xl group bg-[#251522] will-change-transform"
             >
               {!imgError ? (
                 <img
-                  src="/assets/Rectangle.jpg"
-                  alt="Натюрморт с цветами – живопись Ольги Подколзиной"
+                  src="/assets/aistudio/K37A4145_184dd679.jpg"
+                  alt="Художник Ольга Подколзина"
                   loading="lazy"
                   decoding="async"
                   width={600}
-                  height={320}
+                  height={800}
                   referrerPolicy="no-referrer"
                   onError={() => setImgError(true)}
-                  className="w-full h-72 sm:h-80 object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="w-full aspect-[3/4] object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                 />
               ) : (
-                <div className="w-full h-72 sm:h-80 bg-gradient-to-tr from-[#1b0d18] via-[#2d1729] to-[#3f1e39] flex items-center justify-center p-6 text-center">
+                <div className="w-full aspect-[3/4] bg-gradient-to-tr from-[#1b0d18] via-[#2d1729] to-[#3f1e39] flex items-center justify-center p-6 text-center">
                   <div className="space-y-2">
-                    <div className="font-serif text-2xl text-[#E8BD6F]">Академическая мастерская</div>
-                    <div className="text-xs text-[#BAA99A]">Студия авторской живописи</div>
+                    <div className="font-serif text-2xl text-[#E8BD6F]">Ольга Подколзина</div>
+                    <div className="text-xs text-[#BAA99A]">Художник, педагог</div>
                   </div>
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70 pointer-events-none" />
+              <div className="absolute bottom-4 left-4 right-4 text-left pointer-events-none">
+                <span className="text-[11px] font-sans tracking-widest text-[#E8BD6F] uppercase bg-black/50 px-2.5 py-1 rounded-xs backdrop-blur-sm border border-[#D99E41]/30">
+                  Ольга Подколзина
+                </span>
+              </div>
             </motion.div>
           </div>
         </div>

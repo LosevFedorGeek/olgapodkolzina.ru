@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { X, ChevronLeft, ChevronRight, CheckCircle2, ShieldCheck, Sparkles, Package, Truck, Info, Maximize2, ZoomIn } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Sparkles, Package, Info, Maximize2, ZoomIn } from 'lucide-react';
 import { Artwork } from '../types';
 import { ArtCanvas } from './ArtCanvas';
 import { ARTWORKS } from '../data/artworks';
@@ -11,10 +11,9 @@ interface LightboxProps {
   onClose: () => void;
   onPurchase: (artwork: Artwork) => void;
   onNavigate: (artwork: Artwork) => void;
-  onOpenFitting?: (artwork: Artwork) => void;
 }
 
-export const Lightbox: React.FC<LightboxProps> = ({ artwork, onClose, onPurchase, onNavigate, onOpenFitting }) => {
+export const Lightbox: React.FC<LightboxProps> = ({ artwork, onClose, onPurchase, onNavigate }) => {
   const [isDeliveryOpen, setIsDeliveryOpen] = useState(false);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
 
@@ -196,19 +195,6 @@ export const Lightbox: React.FC<LightboxProps> = ({ artwork, onClose, onPurchase
               </div>
 
               <div className="flex flex-col gap-2.5">
-                {onOpenFitting && (
-                  <button
-                    onClick={() => {
-                      triggerHaptic(20);
-                      onOpenFitting(artwork);
-                    }}
-                    className="w-full py-2.5 px-4 bg-[#231222] hover:bg-[#D99E41]/15 text-[#E8BD6F] hover:text-[#FFF5EA] border border-[#D99E41]/40 hover:border-[#D99E41] font-semibold text-xs tracking-wider uppercase rounded-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-                  >
-                    <Sparkles className="w-4 h-4 text-[#D99E41]" />
-                    <span>Примерить в интерьере</span>
-                  </button>
-                )}
-
                 {artwork.inStock && (
                   <button
                     onClick={() => {

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { Eye, CheckCircle2, ShieldCheck, Sparkles, Truck, Frame, Package, Info } from 'lucide-react';
+import { Eye, CheckCircle2, ShieldCheck, Truck, Frame, Award } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Artwork } from '../types';
 import { ArtCanvas } from './ArtCanvas';
@@ -14,7 +14,6 @@ interface GalleryProps {
   onPurchaseArtwork: (artwork: Artwork) => void;
   onAddToCart: (artwork: Artwork) => void;
   onCommissionRequest?: () => void;
-  onOpenFitting?: (artwork?: Artwork) => void;
 }
 
 interface ArtworkCardProps {
@@ -22,7 +21,6 @@ interface ArtworkCardProps {
   idx: number;
   onSelect: (art: Artwork) => void;
   onAction: (art: Artwork) => void;
-  onFitting?: (art: Artwork) => void;
 }
 
 const generateArtSrcSet = (src?: string): string => {
@@ -37,7 +35,7 @@ const generateAdaptiveSizes = (srcSetString: string): string => {
   return '(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(50vw - 28px), (max-width: 1280px) calc(33vw - 24px), 380px';
 };
 
-const ArtworkCard: React.FC<ArtworkCardProps> = ({ art, idx, onSelect, onAction, onFitting }) => {
+const ArtworkCard: React.FC<ArtworkCardProps> = ({ art, idx, onSelect, onAction }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -135,21 +133,6 @@ const ArtworkCard: React.FC<ArtworkCardProps> = ({ art, idx, onSelect, onAction,
           )}
 
           <div className="flex items-center gap-1.5 shrink-0">
-            {onFitting && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  triggerHaptic(20);
-                  onFitting(art);
-                }}
-                className="p-2 rounded-sm border border-[#D99E41]/35 hover:border-[#D99E41] hover:bg-[#D99E41]/15 text-[#E8BD6F] transition-colors cursor-pointer"
-                title="Примерить картину в интерьере"
-                aria-label="Примерить в интерьере"
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-              </button>
-            )}
-
             <button
               onClick={() => {
                 triggerHaptic(25);
@@ -174,8 +157,7 @@ export const Gallery: React.FC<GalleryProps> = ({
   artworks,
   onSelectArtwork,
   onPurchaseArtwork,
-  onCommissionRequest,
-  onOpenFitting
+  onCommissionRequest
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [isDeliveryModalOpen, setIsDeliveryModalOpen] = useState(false);
@@ -190,7 +172,7 @@ export const Gallery: React.FC<GalleryProps> = ({
     return artworks.filter((art) => {
       const matchCat =
         activeCategory === 'all' ||
-        (activeCategory === 'watercolor' && (art.category === 'watercolor' || art.technique.toLowerCase().includes('масло') || art.technique.toLowerCase().includes('акварель'))) ||
+        (activeCategory === 'watercolor' && (art.category === 'watercolor' || art.technique.toLowerCase().includes('масло') || art.technique.toLowerCase().includes('акварель') || art.technique.toLowerCase().includes('гуашь'))) ||
         (activeCategory === 'graphics' && (art.category === 'graphics' || art.technique.toLowerCase().includes('соус') || art.technique.toLowerCase().includes('пастель') || art.technique.toLowerCase().includes('уголь')));
       return matchCat;
     });
@@ -220,7 +202,7 @@ export const Gallery: React.FC<GalleryProps> = ({
                   cat.id === 'all'
                     ? artworks.length
                     : cat.id === 'watercolor'
-                    ? artworks.filter((a) => a.category === 'watercolor' || a.technique.toLowerCase().includes('масло') || a.technique.toLowerCase().includes('акварель')).length
+                    ? artworks.filter((a) => a.category === 'watercolor' || a.technique.toLowerCase().includes('масло') || a.technique.toLowerCase().includes('акварель') || a.technique.toLowerCase().includes('гуашь')).length
                     : artworks.filter((a) => a.category === 'graphics' || a.technique.toLowerCase().includes('соус') || a.technique.toLowerCase().includes('пастель') || a.technique.toLowerCase().includes('уголь')).length;
 
                 const isActive = activeCategory === cat.id;
@@ -262,7 +244,6 @@ export const Gallery: React.FC<GalleryProps> = ({
               idx={idx}
               onSelect={onSelectArtwork}
               onAction={handleCardAction}
-              onFitting={onOpenFitting}
             />
           ))}
         </div>
@@ -338,12 +319,12 @@ export const Gallery: React.FC<GalleryProps> = ({
 
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-sm bg-[#2B1728] text-[#E8BD6F] flex items-center justify-center shrink-0 border border-[#D99E41]/20">
-                <Sparkles className="w-5 h-5 text-[#D99E41]" />
+                <Award className="w-5 h-5 text-[#D99E41]" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-[#F7EFE6] mb-1">Примерка в интерьере</h4>
+                <h4 className="text-sm font-semibold text-[#F7EFE6] mb-1">Академическое качество</h4>
                 <p className="text-xs text-[#A8988B] leading-relaxed">
-                  Бесплатно визуализируем выбранную картину на фотографии вашей стены перед принятием решения о покупке.
+                  Профессиональные светостойкие пигменты, архивная акварельная бумага и грунтованный холст музейного уровня.
                 </p>
               </div>
             </div>
