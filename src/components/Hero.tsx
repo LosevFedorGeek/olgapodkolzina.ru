@@ -48,7 +48,7 @@ export const Hero: React.FC<HeroProps> = ({
       title: 'Ольга Подколзина',
       subtitle: 'Академический художник',
       technique: 'Выпускница худграфа ЧГУ, мастер станковой живописи',
-      imageSrc: '/assets/olga.jpg',
+      imageSrc: '/assets/aistudio/author_portrait_optimized.jpg',
       badge: 'АВТОР'
     },
     ...artworks.map((art) => ({
@@ -174,13 +174,14 @@ export const Hero: React.FC<HeroProps> = ({
                       {currentItem.id === 'portrait' ? (
                         !portraitImgError ? (
                           <img
-                            src="/assets/olga.jpg"
-                            srcSet="/assets/olga.jpg 600w, /assets/olga.jpg 1200w"
+                            src="/assets/aistudio/author_portrait_optimized.jpg"
+                            srcSet="/assets/aistudio/author_portrait_optimized.jpg 600w, /assets/aistudio/author_portrait_optimized.jpg 1200w"
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 450px"
                             alt="Ольга Подколзина — академический художник"
                             referrerPolicy="no-referrer"
                             onError={() => setPortraitImgError(true)}
-                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105 [backface-visibility:hidden] transform-gpu"
+                            style={{ imageRendering: 'auto' }}
                           />
                         ) : (
                           <div className="w-full h-full bg-gradient-to-tr from-[#1b0d18] via-[#31162d] to-[#451e3e] flex flex-col items-center justify-center p-6 text-center">
